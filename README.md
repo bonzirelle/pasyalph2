@@ -53,7 +53,7 @@ or Flutter `--dart-define` values.
 - Map search restricted to the Philippines, explicit location consent, street,
   satellite and terrain tiles, driving/walking/cycling alternatives and navigation
   steps. Transit opens external directions. Estimates do not include live traffic.
-- Responsive web admin portal at `/#/admin` for live catalog analytics and CRUD of
+- Responsive web admin portal at `/admin` for live catalog analytics and CRUD of
   business listings, accommodations, and destinations. Admin access is enforced
   by the signed-in Supabase profile role and database RLS; it does not grant or
   provision administrator privileges.
