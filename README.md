@@ -6,6 +6,13 @@ as Flutter widgets; Firebase is replaced by Supabase client integrations.
 
 ## Run the preview
 
+### Deploy to Vercel
+
+The root `vercel.json` builds Flutter Web with the pinned Flutter 3.47.9 SDK
+and publishes `build/web`. Import this repository into Vercel with the project
+root set to the repository root. The build downloads Flutter on first use; no
+Vercel secret or service-role key is needed for the public client.
+
 In VS Code, open `../PasyalPH.code-workspace`. It selects the active Flutter
 project, uses the workspace-local Flutter SDK, and leaves the archived React
 source outside the active project. The included F5 configuration debugs Chrome
