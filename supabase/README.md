@@ -49,14 +49,40 @@ release described below.
    an `Origin` header still require a valid Supabase access token. Keep the service
    role key and Gemini key in Supabase Function secrets, never Flutter defines.
    No paid provider is configured by this package.
-4. In Supabase Auth, allow `http://localhost:3000/`, `http://127.0.0.1:3000/`, the
-   production origin, and `com.pasyalph.app://login-callback/` redirect URLs.
-   Google OAuth additionally requires the operator's Google client credentials.
+4. Configure Supabase Auth redirect URLs for
+   `http://localhost:3000/`, `http://127.0.0.1:3000/`,
+   `https://pasyalph2.vercel.app/`, and
+   `com.pasyalph.app://login-callback/`.
    Email signup, confirmation, reset, and optional codes use Supabase email
    templates. Custom SMTP and template configuration remain operator settings.
 5. Run security/performance advisors. Test anonymous reads, traveler isolation,
    owner approval, protected columns, uploads, Realtime and destructive account
    deletion in a test environment before public launch.
+
+## Enable Google sign-in
+
+The login screen includes a **Continue with Google** button. Complete this
+one-time provider setup before using it in production:
+
+1. In Google Cloud Console, create an OAuth 2.0 client ID for a Web application.
+   Add `https://dwpetlhrbxxeqmfdmqdv.supabase.co` as an authorized JavaScript
+   origin and `https://dwpetlhrbxxeqmfdmqdv.supabase.co/auth/v1/callback` as an
+   authorized redirect URI. Configure the OAuth consent screen and add test
+   users or publish the app as required by Google.
+2. In the Supabase Dashboard, open **Authentication → Providers → Google**,
+   enable Google, and enter the Google client ID and client secret. Save them
+   only in Supabase; do not put the client secret in Flutter, GitHub, or Vercel
+   client-side build variables.
+3. In **Authentication → URL Configuration**, set the Site URL to
+   `https://pasyalph2.vercel.app/` and add the production, local, and
+   `com.pasyalph.app://login-callback/` redirect URLs listed above.
+4. Test Google sign-in on the deployed website and Android app. The OAuth flow
+   redirects back to the current web origin or the app callback URI. Google
+   sign-in creates a normal traveler account unless an administrator role is
+   separately granted to that account.
+
+If Google has not been enabled in Supabase yet, the app displays an actionable
+message when the button is used. No Google credentials are stored in this repo.
 
 The production migration attempt was rejected by automatic approval review.
 No schema, data, bucket, function, or Auth configuration changes were made.

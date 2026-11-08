@@ -47,7 +47,9 @@ or Flutter `--dart-define` values.
 - All 45 original sample listings. Sample reviews are separately labeled and do
   not inflate real traveler ratings. Confirm sample contact details before use.
 - Supabase email/password auth, signup confirmation/resend, optional email codes,
-  magic links, password recovery, and Google OAuth client flow.
+  magic links, password recovery, and a visible Google sign-in option. Google
+  OAuth requires the provider credentials to be configured in Supabase; see
+  [Google sign-in setup](supabase/README.md#enable-google-sign-in).
 - Saved places, profile editing, photo uploads, preferences, home/work addresses,
   owner applications, listing submission/editing, and admin moderation interfaces.
 - Map search restricted to the Philippines, explicit location consent, street,
@@ -70,8 +72,10 @@ or Flutter `--dart-define` values.
 approval review rejected the production migration. Review the concrete package in
 [supabase/README.md](supabase/README.md) before approving its application.
 
-The existing project has email auth enabled, Google disabled, and no published
-places. Until the backend release is approved:
+The existing project has email auth enabled, Google OAuth not yet configured,
+and no published places. The app now displays a Google sign-in option, but
+Google sign-in will work only after completing the provider setup below. Until
+the backend release is approved:
 
 - Explore uses the original local sample catalog.
 - Local sample saves are device-only. Published-place saves use Supabase.
@@ -82,8 +86,8 @@ places. Until the backend release is approved:
   release. For live refresh on existing tables only, review and run
   `sql/05_enable_realtime_publication_only.sql` in Supabase; it changes
   publication membership without applying the broader release.
-- Google needs provider credentials; email links need allowed redirects. A Gemini
-  secret is optional and must remain server-side. Catalog mode needs no AI key.
+- Email links need allowed redirects. A Gemini secret is optional and must remain
+  server-side. Catalog mode needs no AI key.
 
 No account is automatically granted owner/admin privileges. Business approval uses
 the existing administrator RPC. Existing Firebase users/passwords are not imported.

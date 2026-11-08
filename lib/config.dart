@@ -5,8 +5,3 @@ const supabaseUrl = String.fromEnvironment('SUPABASE_URL',
 const supabasePublishableKey = String.fromEnvironment(
     'SUPABASE_PUBLISHABLE_KEY',
     defaultValue: 'sb_publishable_4t0n2OFqpjPAvD5657W7vg_VfPamvrV');
-
-const googleAuthEnabled = bool.fromEnvironment(
-  'GOOGLE_AUTH_ENABLED',
-  defaultValue: false,
-);

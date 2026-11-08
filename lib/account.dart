@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app_state.dart';
-import 'config.dart';
 import 'ui.dart';
 import 'business.dart';
 import 'assistant.dart';
@@ -21,6 +20,12 @@ String authActionError(Object error) {
     final lower = message.toLowerCase();
     if (lower.contains('email address not authorized')) {
       return 'Supabase is using its limited test email service. Configure custom SMTP in Supabase Auth to send to Gmail and other addresses.';
+    }
+    if (lower.contains('provider') &&
+        (lower.contains('disabled') ||
+            lower.contains('not enabled') ||
+            lower.contains('unsupported'))) {
+      return 'Google sign-in is not enabled in Supabase yet. Configure Google under Authentication → Providers, then try again.';
     }
     if (lower.contains('redirect') &&
         (lower.contains('allow') || lower.contains('not permitted'))) {
@@ -358,30 +363,28 @@ class _AccountPageState extends State<AccountPage> {
                               icon: const Icon(Icons.mark_email_read_outlined),
                               label: const Text(
                                   'Email me a sign-in link or code'))),
-                      if (googleAuthEnabled) ...[
-                        const SizedBox(height: 12),
-                        SizedBox(
-                            width: double.infinity,
-                            child: OutlinedButton.icon(
-                                onPressed: busy
-                                    ? null
-                                    : () => action((a) async {
-                                          if (signup && !accepted) {
-                                            final yes = await confirm(
-                                                context,
-                                                'Continue with Google?',
-                                                'By continuing, you agree to the Terms of Use and Privacy Policy.',
-                                                action: 'Agree and continue');
-                                            if (!yes) return;
-                                            accepted = true;
-                                          }
-                                          await a.client.auth.signInWithOAuth(
-                                              OAuthProvider.google,
-                                              redirectTo: authRedirect);
-                                        }),
-                                icon: const Icon(Icons.account_circle_outlined),
-                                label: const Text('Continue with Google')))
-                      ],
+                      const SizedBox(height: 12),
+                      SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                              onPressed: busy
+                                  ? null
+                                  : () => action((a) async {
+                                        if (signup && !accepted) {
+                                          final yes = await confirm(
+                                              context,
+                                              'Continue with Google?',
+                                              'By continuing, you agree to the Terms of Use and Privacy Policy.',
+                                              action: 'Agree and continue');
+                                          if (!yes) return;
+                                          accepted = true;
+                                        }
+                                        await a.client.auth.signInWithOAuth(
+                                            OAuthProvider.google,
+                                            redirectTo: authRedirect);
+                                      }),
+                              icon: const Icon(Icons.account_circle_outlined),
+                              label: const Text('Continue with Google')))
                     ]))),
           const SizedBox(height: 18),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [

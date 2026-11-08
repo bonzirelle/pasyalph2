@@ -56,12 +56,13 @@ Link** template for passwordless sign-in. Keep the password-reset template's
 Supabase returns the recovery session. Never send or log passwords or reusable
 access tokens in an email template.
 
-The login page offers password sign-in and a full-width email-link/code action.
+The login page offers password sign-in, a full-width email-link/code action,
+and Google sign-in.
 After requesting a code, enter the six-digit code on the same screen, or open
 the link on the device/browser where you want to sign in. The Google button is
-hidden unless the app is built with `--dart-define=GOOGLE_AUTH_ENABLED=true`;
-enable that only after configuring Google OAuth in Supabase and its redirect
-URLs. Gmail SMTP delivery and Google OAuth sign-in are separate settings.
+shown in the form, but Google authentication will succeed only after configuring
+the Google OAuth provider and redirect URLs in Supabase. Gmail SMTP delivery and
+Google OAuth sign-in are separate settings.
 
 ## Verify delivery
 

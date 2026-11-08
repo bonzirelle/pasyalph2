@@ -363,6 +363,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.enterText(
         find.byKey(const ValueKey('account-email')), 'traveler@example.test');
+    expect(find.text('Continue with Google'), findsOneWidget);
     await tester.tap(find.text('Email me a sign-in link or code'));
     await tester.runAsync(
         () => Future<void>.delayed(const Duration(milliseconds: 100)));
