@@ -12,6 +12,12 @@ import 'assistant.dart';
 import 'admin.dart';
 import 'business.dart';
 
+String initialRouteFromUri(Uri uri) {
+  if (uri.path.isNotEmpty && uri.path != '/') return uri.path;
+  final fragmentPath = Uri.tryParse(uri.fragment)?.path ?? '';
+  return fragmentPath.startsWith('/') ? fragmentPath : '/';
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
@@ -44,6 +50,7 @@ class PasyalPH extends StatelessWidget {
           builder: (context, _) => MaterialApp(
                 title: 'PasyalPH — Explore local places',
                 debugShowCheckedModeBanner: false,
+                initialRoute: initialRouteFromUri(Uri.base),
                 theme: appTheme(false),
                 darkTheme: appTheme(true),
                 themeMode: state.settings['colorScheme'] == 'night'

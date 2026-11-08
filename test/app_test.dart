@@ -79,6 +79,13 @@ void main() {
     app.dispose();
     await app.client.dispose();
   });
+  test('Web deep links select their initial named route', () {
+    expect(
+        initialRouteFromUri(Uri.parse('https://example.test/admin')), '/admin');
+    expect(initialRouteFromUri(Uri.parse('https://example.test/#/admin')),
+        '/admin');
+    expect(initialRouteFromUri(Uri.parse('https://example.test/')), '/');
+  });
   test('Sample saves persist locally without creating Supabase rows', () async {
     final app = await fixture();
     final p = app.catalog.first;
