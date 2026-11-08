@@ -2,6 +2,32 @@ Backend release package — prepared, NOT applied or deployed
 
 Target: existing project `dwpetlhrbxxeqmfdmqdv` (pasyalph).
 
+## Enable Realtime without the broader migration
+
+To turn on Realtime publication for existing app tables without applying the
+unrelated schema, RLS, storage, and function changes in the full feature
+migration, review and run `../sql/05_enable_realtime_publication_only.sql` in
+the Supabase SQL Editor. It is idempotent and only adds existing tables to the
+`supabase_realtime` publication. It includes `trip_plans` only if that table
+already exists.
+
+The app's existing Realtime subscription refreshes its data when it receives
+public-schema Postgres changes. Supabase still enforces the current table grants
+and RLS policies; this script does not weaken or modify them. A change is
+delivered only when the subscriber is permitted to read the affected row under
+the project's existing policies. After running the script, verify membership:
+
+```sql
+select schemaname, tablename
+from pg_publication_tables
+where pubname = 'supabase_realtime'
+  and schemaname = 'public'
+order by tablename;
+```
+
+Running this publication-only script does not apply the broader backend feature
+release described below.
+
 1. Review and apply `../sql/03_flutter_feature_parity.sql` once as a migration.
    It adds sample metadata and private trip plans, scopes private authenticated
    rows to their owner/admin with restrictive RLS (while retaining public

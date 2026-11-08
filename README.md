@@ -75,8 +75,10 @@ places. Until the backend release is approved:
 - Real account/profile/business features use the existing tables and their RLS.
 - New trip plans fall back to device storage and explicitly report that storage.
 - Posting traveler reviews/reports on sample listings requires catalog import.
-- Uploads, cloud trip plans, new Realtime subscriptions and Edge Functions need
-  the prepared backend release. Errors do not show a false success state.
+- Uploads, cloud trip plans, and Edge Functions need the prepared backend
+  release. For live refresh on existing tables only, review and run
+  `sql/05_enable_realtime_publication_only.sql` in Supabase; it changes
+  publication membership without applying the broader release.
 - Google needs provider credentials; email links need allowed redirects. A Gemini
   secret is optional and must remain server-side. Catalog mode needs no AI key.
 
