@@ -1,0 +1,1325 @@
+[
+  {
+    "id": "taal-view",
+    "name": "Taal Vista Viewpoint",
+    "category": "Tourist Spot",
+    "image": "assets/images/taal.jpg",
+    "description": "Iconic ridge overlooking Taal Lake and Volcano Island. Best at sunrise and sunset.",
+    "address": "Aguinaldo Hwy, Tagaytay",
+    "lat": 14.1005,
+    "lng": 120.9587,
+    "hours": "Open 24 hours",
+    "contact": "(046) 413-1000",
+    "rates": "Free entry",
+    "amenities": [
+      "Parking",
+      "Restrooms",
+      "Viewing deck"
+    ],
+    "routes": [
+      {
+        "mode": "Jeepney",
+        "detail": "Ride Tagaytay–Nasugbu route, drop at Rotonda",
+        "estimate": "₱15–₱25"
+      },
+      {
+        "mode": "Car",
+        "detail": "Via Aguinaldo Highway, 10 min from Olivarez"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 10, 2026",
+    "sample_reviews": [
+      {
+        "id": "r1",
+        "user": "Mika R.",
+        "rating": 5,
+        "text": "Breathtaking view, came at 6am and it was empty.",
+        "date": "Oct 2"
+      },
+      {
+        "id": "r2",
+        "user": "Jon P.",
+        "rating": 4,
+        "text": "Crowded on weekends but worth it.",
+        "date": "Sep 28"
+      }
+    ]
+  },
+  {
+    "id": "bulalo-house",
+    "name": "Lola Nena's Bulalo House",
+    "category": "Food",
+    "image": "assets/images/bulalo.jpg",
+    "description": "Family-run eatery serving slow-cooked bulalo and grilled liempo since 1998.",
+    "address": "Calamba Rd, Tagaytay",
+    "lat": 14.1062,
+    "lng": 120.9628,
+    "hours": "7:00 AM – 10:00 PM",
+    "contact": "0917 555 0182",
+    "rates": "₱350–₱850 per group meal",
+    "amenities": [
+      "Parking",
+      "Family seating",
+      "Takeout"
+    ],
+    "routes": [
+      {
+        "mode": "Tricycle",
+        "detail": "From Rotonda terminal",
+        "estimate": "₱40–₱60"
+      },
+      {
+        "mode": "Walk",
+        "detail": "15 min from Taal Vista"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": true,
+    "is_sample": true,
+    "source_updated": "Oct 14, 2026",
+    "sample_reviews": [
+      {
+        "id": "r3",
+        "user": "Andrea L.",
+        "rating": 5,
+        "text": "Best bulalo we've had. Huge servings.",
+        "date": "Oct 11"
+      }
+    ]
+  },
+  {
+    "id": "ulap-cafe",
+    "name": "Ulap Hillside Café",
+    "category": "Food",
+    "image": "assets/images/cafe.jpg",
+    "description": "Specialty coffee and brunch on a wooden deck above the clouds.",
+    "address": "Mendez Crossing, Tagaytay",
+    "lat": 14.1135,
+    "lng": 120.9541,
+    "hours": "8:00 AM – 9:00 PM",
+    "contact": "0918 222 4410",
+    "rates": "₱150–₱450 per person",
+    "amenities": [
+      "Wi-Fi",
+      "Pet friendly",
+      "Outdoor seating"
+    ],
+    "routes": [
+      {
+        "mode": "Jeepney",
+        "detail": "Mendez route, drop at crossing",
+        "estimate": "₱15–₱20"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 8, 2026",
+    "sample_reviews": [
+      {
+        "id": "r4",
+        "user": "Carlo M.",
+        "rating": 4,
+        "text": "Great view, coffee is solid. Slow service at peak.",
+        "date": "Oct 5"
+      }
+    ]
+  },
+  {
+    "id": "lakeside-resort",
+    "name": "Bahay Lawa Resort",
+    "category": "Resort",
+    "image": "assets/images/resort.jpg",
+    "description": "Boutique resort with infinity pool, garden cabins, and lake-facing rooms.",
+    "address": "Talisay Rd, Tagaytay",
+    "lat": 14.0842,
+    "lng": 120.9413,
+    "hours": "Check-in 2 PM · Check-out 12 NN",
+    "contact": "0927 880 1123",
+    "rates": "₱4,500–₱9,800 per night",
+    "amenities": [
+      "Pool",
+      "Breakfast",
+      "Parking",
+      "Wi-Fi"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Via Tagaytay–Talisay Road, 20 min"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 15, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "peoples-park",
+    "name": "People's Park in the Sky",
+    "category": "Tourist Spot",
+    "image": "assets/images/taal.jpg",
+    "description": "A mountaintop park known for broad views across Tagaytay and the surrounding countryside. Check current access and entry details before visiting.",
+    "address": "Mt. Gonzales, Tagaytay City",
+    "lat": 14.1292,
+    "lng": 120.9928,
+    "hours": "Check current operating hours",
+    "contact": "Not listed",
+    "rates": "Check current entrance fees",
+    "amenities": [
+      "Scenic views",
+      "Outdoor paths"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Use directions for the latest route"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "tagaytay-picnic-grove",
+    "name": "Tagaytay Picnic Grove",
+    "category": "Tourist Spot",
+    "image": "assets/images/taal.jpg",
+    "description": "An outdoor recreation area with picnic spaces and views of Taal Lake. Check current activities and access before your visit.",
+    "address": "Tagaytay-Calamba Road, Tagaytay City",
+    "lat": 14.1197,
+    "lng": 120.9607,
+    "hours": "Check current operating hours",
+    "contact": "Not listed",
+    "rates": "Check current entrance fees",
+    "amenities": [
+      "Picnic areas",
+      "Outdoor recreation",
+      "Scenic views"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Use directions for the latest route"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "sky-ranch-tagaytay",
+    "name": "Sky Ranch Tagaytay",
+    "category": "Tourist Spot",
+    "image": "assets/images/resort.jpg",
+    "description": "A leisure and amusement destination along Tagaytay's ridge. Confirm ride availability, opening hours, and ticket prices with the venue.",
+    "address": "Sky Ranch, Tagaytay-Nasugbu Highway",
+    "lat": 14.1114,
+    "lng": 120.9368,
+    "hours": "Check current operating hours",
+    "contact": "Not listed",
+    "rates": "Check current ticket prices",
+    "amenities": [
+      "Amusement rides",
+      "Family activities",
+      "Scenic views"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Use directions for the latest route"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "taal-view-loft-rental",
+    "name": "Taal View Loft Rental",
+    "category": "Stay",
+    "image": "assets/images/resort.jpg",
+    "description": "Sample short-stay rental listing for the PasyalPH demo. Host, availability, rates, and Airbnb booking are not yet verified or connected.",
+    "address": "Tagaytay City, Cavite",
+    "lat": 14.1038,
+    "lng": 120.9569,
+    "hours": "Check with host",
+    "contact": "Host contact not listed",
+    "rates": "Contact host for rates",
+    "amenities": [
+      "Short-stay rental",
+      "Scenic area"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Use directions for the latest route"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "tagaytay-garden-home",
+    "name": "Tagaytay Garden Home Rental",
+    "category": "Stay",
+    "image": "assets/images/cafe.jpg",
+    "description": "Sample vacation-home listing for the PasyalPH demo. Host, availability, rates, and Airbnb booking are not yet verified or connected.",
+    "address": "Tagaytay City, Cavite",
+    "lat": 14.1162,
+    "lng": 120.9508,
+    "hours": "Check with host",
+    "contact": "Host contact not listed",
+    "rates": "Contact host for rates",
+    "amenities": [
+      "Short-stay rental",
+      "Garden setting"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Use directions for the latest route"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "boracay-white-beach",
+    "name": "Boracay White Beach",
+    "category": "Tourist Spot",
+    "image": "assets/images/taal.jpg",
+    "description": "World-famous 4-kilometer stretch of powdery white sand and turquoise waters on Boracay Island, Aklan.",
+    "address": "Boracay Island, Malay, Aklan",
+    "lat": 11.9624,
+    "lng": 121.9235,
+    "hours": "Open 24 hours",
+    "contact": "(036) 288 4982",
+    "rates": "Free entry",
+    "amenities": [
+      "White sand beach",
+      "Water sports",
+      "Restaurants"
+    ],
+    "routes": [
+      {
+        "mode": "Flight",
+        "detail": "Fly to Caticlan or Kalibo, then boat to Boracay"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "chocolate-hills-bohol",
+    "name": "Chocolate Hills",
+    "category": "Tourist Spot",
+    "image": "assets/images/resort.jpg",
+    "description": "Over 1,200 perfectly cone-shaped hills scattered across Bohol that turn chocolate brown during the dry season.",
+    "address": "Carmen, Bohol",
+    "lat": 9.8553,
+    "lng": 124.1301,
+    "hours": "8:00 AM – 5:00 PM",
+    "contact": "(038) 501 8959",
+    "rates": "₱50 entrance",
+    "amenities": [
+      "Viewing deck",
+      "Restaurant",
+      "Souvenir shop"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Tagbilaran City to Carmen, Bohol"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "pagsanjan-falls-laguna",
+    "name": "Pagsanjan Falls",
+    "category": "Tourist Spot",
+    "image": "assets/images/bulalo.jpg",
+    "description": "Three-tiered waterfall in Laguna accessible by a thrilling dugout canoe ride through the Bumbungan River gorge.",
+    "address": "Pagsanjan, Laguna",
+    "lat": 14.3057,
+    "lng": 121.4544,
+    "hours": "7:00 AM – 5:00 PM",
+    "contact": "(049) 553 1001",
+    "rates": "₱400 boat ride",
+    "amenities": [
+      "Canoe ride",
+      "Cottage rental",
+      "Food stalls"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Pagsanjan, Laguna via SLEX"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "taal-volcano-batangas",
+    "name": "Taal Volcano",
+    "category": "Tourist Spot",
+    "image": "assets/images/taal.jpg",
+    "description": "One of the world's smallest active volcanoes, located within Taal Lake in Batangas.",
+    "address": "Talisay, Batangas",
+    "lat": 14.0025,
+    "lng": 120.9929,
+    "hours": "6:00 AM – 4:00 PM",
+    "contact": "(043) 740 8102",
+    "rates": "₱150 boat fee",
+    "amenities": [
+      "Boat tour",
+      "Hiking trail",
+      "Viewing deck"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Tagaytay to Talisay, Batangas"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "hundred-islands-pangasinan",
+    "name": "Hundred Islands National Park",
+    "category": "Tourist Spot",
+    "image": "assets/images/cafe.jpg",
+    "description": "A group of 124 islands in Alaminos, Pangasinan. Popular for island hopping, snorkeling, and kayaking.",
+    "address": "Alaminos, Pangasinan",
+    "lat": 16.1363,
+    "lng": 119.9578,
+    "hours": "6:00 AM – 5:00 PM",
+    "contact": "(075) 552 4101",
+    "rates": "₱100 entrance",
+    "amenities": [
+      "Island hopping",
+      "Snorkeling",
+      "Cottage rental"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Alaminos, Pangasinan via NLEX"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "baguio-burnham-park",
+    "name": "Burnham Park",
+    "category": "Tourist Spot",
+    "image": "assets/images/resort.jpg",
+    "description": "Historic urban park in Baguio City featuring a man-made lake, bicycle rentals, and picnic areas.",
+    "address": "Baguio City, Benguet",
+    "lat": 16.4138,
+    "lng": 120.5962,
+    "hours": "Open 24 hours",
+    "contact": "(074) 442 3882",
+    "rates": "Free entry",
+    "amenities": [
+      "Boat rental",
+      "Bicycle rental",
+      "Picnic grounds"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Baguio City"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "banaue-rice-terraces",
+    "name": "Banaue Rice Terraces",
+    "category": "Tourist Spot",
+    "image": "assets/images/taal.jpg",
+    "description": "2,000-year-old rice terraces carved into the mountains of Ifugao.",
+    "address": "Banaue, Ifugao",
+    "lat": 16.9141,
+    "lng": 121.0523,
+    "hours": "Open 24 hours",
+    "contact": "(074) 386 4050",
+    "rates": "Free entry",
+    "amenities": [
+      "Viewing deck",
+      "Local guides"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Banaue, Ifugao"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "vigan-heritage-village",
+    "name": "Vigan Heritage Village",
+    "category": "Tourist Spot",
+    "image": "assets/images/resort.jpg",
+    "description": "Well-preserved Spanish colonial town in Ilocos Sur. UNESCO World Heritage Site.",
+    "address": "Vigan City, Ilocos Sur",
+    "lat": 17.5755,
+    "lng": 120.3869,
+    "hours": "Open 24 hours",
+    "contact": "(077) 674 2301",
+    "rates": "Free entry",
+    "amenities": [
+      "Calesa ride",
+      "Museums"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Vigan, Ilocos Sur"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "sagada-hanging-coffins",
+    "name": "Sagada Hanging Coffins",
+    "category": "Tourist Spot",
+    "image": "assets/images/cafe.jpg",
+    "description": "Ancient burial tradition where coffins are hung on limestone cliffs in Sagada.",
+    "address": "Sagada, Mountain Province",
+    "lat": 17.1118,
+    "lng": 120.9045,
+    "hours": "8:00 AM – 5:00 PM",
+    "contact": "(074) 462 0134",
+    "rates": "₱50 entrance",
+    "amenities": [
+      "Local guide",
+      "Viewing deck"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Sagada, Mountain Province"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "anilao-diving-batangas",
+    "name": "Anilao Diving Spots",
+    "category": "Tourist Spot",
+    "image": "assets/images/bulalo.jpg",
+    "description": "Premier diving destination in Batangas known for rich marine biodiversity.",
+    "address": "Anilao, Mabini, Batangas",
+    "lat": 13.733,
+    "lng": 120.933,
+    "hours": "Open 24 hours",
+    "contact": "(043) 756 2345",
+    "rates": "₱500 dive fee",
+    "amenities": [
+      "Dive shops",
+      "Resorts"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Anilao, Batangas"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "corregidor-island",
+    "name": "Corregidor Island",
+    "category": "Tourist Spot",
+    "image": "assets/images/taal.jpg",
+    "description": "Historic island fortress at the entrance of Manila Bay.",
+    "address": "Corregidor Island, Cavite",
+    "lat": 14.3842,
+    "lng": 120.5761,
+    "hours": "8:00 AM – 5:00 PM",
+    "contact": "(046) 431 0132",
+    "rates": "₱2,200 tour package",
+    "amenities": [
+      "Guided tour",
+      "Museum"
+    ],
+    "routes": [
+      {
+        "mode": "Ferry",
+        "detail": "Ferry from Manila to Corregidor Island"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "mount-pinatubo-tarlac",
+    "name": "Mount Pinatubo",
+    "category": "Tourist Spot",
+    "image": "assets/images/cafe.jpg",
+    "description": "Active volcano known for its 1991 eruption. Offers trekking to the crater lake.",
+    "address": "Botolan, Zambales",
+    "lat": 15.1367,
+    "lng": 120.3498,
+    "hours": "6:00 AM – 2:00 PM",
+    "contact": "(045) 625 0123",
+    "rates": "₱2,500 trek package",
+    "amenities": [
+      "4x4 ride",
+      "Trekking guide"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Santa Juliana, Capas, Tarlac"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "subic-bay-zambales",
+    "name": "Subic Bay Freeport Zone",
+    "category": "Tourist Spot",
+    "image": "assets/images/resort.jpg",
+    "description": "Former US naval base turned tourism hub featuring beaches and adventure parks.",
+    "address": "Subic, Zambales",
+    "lat": 14.8127,
+    "lng": 120.2841,
+    "hours": "Open 24 hours",
+    "contact": "(047) 252 4431",
+    "rates": "Varies by attraction",
+    "amenities": [
+      "Beach",
+      "Zoo",
+      "Shopping"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Subic, Zambales via SCTEX"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "angono-petroglyphs-rizal",
+    "name": "Angono-Binangonan Petroglyphs",
+    "category": "Tourist Spot",
+    "image": "assets/images/taal.jpg",
+    "description": "Prehistoric rock engravings dating back to 3000 BC in Rizal Province.",
+    "address": "Binangonan, Rizal",
+    "lat": 14.5119,
+    "lng": 121.1601,
+    "hours": "8:00 AM – 5:00 PM",
+    "contact": "(02) 8671 2345",
+    "rates": "₱20 entrance",
+    "amenities": [
+      "Viewing deck",
+      "Museum"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Binangonan, Rizal"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "hinulugan-taktai-rizal",
+    "name": "Hinulugang Taktak",
+    "category": "Tourist Spot",
+    "image": "assets/images/bulalo.jpg",
+    "description": "National Historical Shrine in Antipolo, Rizal featuring a waterfall.",
+    "address": "Antipolo City, Rizal",
+    "lat": 14.5844,
+    "lng": 121.1745,
+    "hours": "8:00 AM – 5:00 PM",
+    "contact": "(02) 8672 0132",
+    "rates": "₱30 entrance",
+    "amenities": [
+      "Waterfall",
+      "Park"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Antipolo City, Rizal"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "mount-makiling-laguna",
+    "name": "Mount Makiling",
+    "category": "Tourist Spot",
+    "image": "assets/images/resort.jpg",
+    "description": "Dormant stratovolcano in Laguna known for hiking trails and hot springs.",
+    "address": "Los Baños, Laguna",
+    "lat": 14.1301,
+    "lng": 121.1725,
+    "hours": "6:00 AM – 4:00 PM",
+    "contact": "(049) 536 2345",
+    "rates": "₱100 entrance",
+    "amenities": [
+      "Hiking trail",
+      "Hot springs"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Los Baños, Laguna via SLEX"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "pila-heritage-town-laguna",
+    "name": "Pila Heritage Town",
+    "category": "Tourist Spot",
+    "image": "assets/images/cafe.jpg",
+    "description": "Well-preserved Spanish colonial and American-era ancestral houses in Pila, Laguna.",
+    "address": "Pila, Laguna",
+    "lat": 14.2355,
+    "lng": 121.3275,
+    "hours": "Open 24 hours",
+    "contact": "(049) 519 2345",
+    "rates": "Free entry",
+    "amenities": [
+      "Heritage houses",
+      "Church"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Pila, Laguna via SLEX"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "taal-heritage-town-batangas",
+    "name": "Taal Heritage Town",
+    "category": "Tourist Spot",
+    "image": "assets/images/taal.jpg",
+    "description": "Heritage town in Batangas with Spanish colonial houses and the Basilica of St. Martin de Tours.",
+    "address": "Taal, Batangas",
+    "lat": 13.8806,
+    "lng": 120.9235,
+    "hours": "Open 24 hours",
+    "contact": "(043) 712 0134",
+    "rates": "Free entry",
+    "amenities": [
+      "Basilica",
+      "Ancestral houses"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Taal, Batangas via STAR Tollway"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "la-union-surfing",
+    "name": "La Union Surfing Spots",
+    "category": "Tourist Spot",
+    "image": "assets/images/bulalo.jpg",
+    "description": "Surfing capital of Northern Luzon with consistent waves in San Juan, La Union.",
+    "address": "San Juan, La Union",
+    "lat": 16.6187,
+    "lng": 120.3286,
+    "hours": "Open 24 hours",
+    "contact": "(072) 607 2345",
+    "rates": "Free entry",
+    "amenities": [
+      "Surf schools",
+      "Board rental"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to San Juan, La Union"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "bangui-windmills-ilocos-norte",
+    "name": "Bangui Windmills",
+    "category": "Tourist Spot",
+    "image": "assets/images/cafe.jpg",
+    "description": "Row of 20 wind turbines along the coast of Bangui, Ilocos Norte.",
+    "address": "Bangui, Ilocos Norte",
+    "lat": 18.5452,
+    "lng": 120.6992,
+    "hours": "Open 24 hours",
+    "contact": "(077) 772 2345",
+    "rates": "Free entry",
+    "amenities": [
+      "Beach",
+      "Photo spot"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Bangui, Ilocos Norte"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "paoay-church-ilocos-norte",
+    "name": "Paoay Church",
+    "category": "Tourist Spot",
+    "image": "assets/images/resort.jpg",
+    "description": "UNESCO World Heritage Site in Paoay, Ilocos Norte with earthquake baroque architecture.",
+    "address": "Paoay, Ilocos Norte",
+    "lat": 18.0833,
+    "lng": 120.45,
+    "hours": "8:00 AM – 5:00 PM",
+    "contact": "(077) 672 2345",
+    "rates": "Free entry",
+    "amenities": [
+      "Church",
+      "Parking"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Paoay, Ilocos Norte"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "cape-bojeador-ilocos-norte",
+    "name": "Cape Bojeador Lighthouse",
+    "category": "Tourist Spot",
+    "image": "assets/images/cafe.jpg",
+    "description": "Spanish colonial lighthouse in Burgos, Ilocos Norte overlooking the South China Sea.",
+    "address": "Burgos, Ilocos Norte",
+    "lat": 18.5267,
+    "lng": 120.6312,
+    "hours": "8:00 AM – 5:00 PM",
+    "contact": "(077) 774 2345",
+    "rates": "₱20 entrance",
+    "amenities": [
+      "Lighthouse",
+      "Museum"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Burgos, Ilocos Norte"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "kapurpurawan-ilocos-norte",
+    "name": "Kapurpurawan Rock Formation",
+    "category": "Tourist Spot",
+    "image": "assets/images/bulalo.jpg",
+    "description": "Creamy white rock formations shaped by wind and waves in Burgos, Ilocos Norte.",
+    "address": "Burgos, Ilocos Norte",
+    "lat": 18.5234,
+    "lng": 120.6278,
+    "hours": "8:00 AM – 5:00 PM",
+    "contact": "(077) 774 2346",
+    "rates": "₱30 entrance",
+    "amenities": [
+      "Rock formations",
+      "Horseback riding"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Burgos, Ilocos Norte"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "baler-aurora-surfing",
+    "name": "Baler Surfing Spots",
+    "category": "Tourist Spot",
+    "image": "assets/images/resort.jpg",
+    "description": "Surfing destination in Aurora Province known as the birthplace of Philippine surfing.",
+    "address": "Baler, Aurora",
+    "lat": 15.7586,
+    "lng": 121.6037,
+    "hours": "Open 24 hours",
+    "contact": "(042) 723 2345",
+    "rates": "Free entry",
+    "amenities": [
+      "Surf schools",
+      "Beach"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Baler, Aurora"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "dingalan-aurora",
+    "name": "Dingalan, Aurora",
+    "category": "Tourist Spot",
+    "image": "assets/images/taal.jpg",
+    "description": "Surfing and beach destination in Aurora known as the 'Batanes of the East'.",
+    "address": "Dingalan, Aurora",
+    "lat": 15.9399,
+    "lng": 121.6268,
+    "hours": "Open 24 hours",
+    "contact": "(042) 728 2345",
+    "rates": "Free entry",
+    "amenities": [
+      "Beach",
+      "Surfing"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Dingalan, Aurora"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "anawangin-cove-zambales",
+    "name": "Anawangin Cove",
+    "category": "Tourist Spot",
+    "image": "assets/images/bulalo.jpg",
+    "description": "Unique beach in Zambales with ash-gray sand and agoho pine trees.",
+    "address": "San Antonio, Zambales",
+    "lat": 14.8909,
+    "lng": 120.117,
+    "hours": "8:00 AM – 5:00 PM",
+    "contact": "(047) 382 2345",
+    "rates": "₱100 entrance",
+    "amenities": [
+      "Camping",
+      "Boat ride",
+      "Swimming"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Pundaquit, Zambales"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "potipot-island-zambales",
+    "name": "Potipot Island",
+    "category": "Tourist Spot",
+    "image": "assets/images/cafe.jpg",
+    "description": "Tiny white sand island in Candelaria, Zambales perfect for day trips.",
+    "address": "Candelaria, Zambales",
+    "lat": 15.311,
+    "lng": 119.874,
+    "hours": "7:00 AM – 5:00 PM",
+    "contact": "(047) 392 2345",
+    "rates": "₱200 boat fee",
+    "amenities": [
+      "White sand beach",
+      "Camping"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Candelaria, Zambales"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "mount-samat-bataan",
+    "name": "Mount Samat National Shrine",
+    "category": "Tourist Spot",
+    "image": "assets/images/resort.jpg",
+    "description": "War memorial in Pilar, Bataan dedicated to Filipino and American soldiers of World War II.",
+    "address": "Pilar, Bataan",
+    "lat": 14.5663,
+    "lng": 120.4015,
+    "hours": "8:00 AM – 5:00 PM",
+    "contact": "(047) 237 2345",
+    "rates": "₱30 entrance",
+    "amenities": [
+      "Memorial cross",
+      "Museum"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Pilar, Bataan via SCTEX"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "las-casas-bataan",
+    "name": "Las Casas Filipinas de Acuzar",
+    "category": "Tourist Spot",
+    "image": "assets/images/taal.jpg",
+    "description": "Heritage park in Bagac, Bataan featuring restored Spanish colonial houses.",
+    "address": "Bagac, Bataan",
+    "lat": 14.5333,
+    "lng": 120.3667,
+    "hours": "8:00 AM – 5:00 PM",
+    "contact": "(047) 238 2345",
+    "rates": "₱650 entrance",
+    "amenities": [
+      "Heritage houses",
+      "Guided tour"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Bagac, Bataan via SCTEX"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "puning-hot-springs-pampanga",
+    "name": "Puning Hot Springs",
+    "category": "Tourist Spot",
+    "image": "assets/images/bulalo.jpg",
+    "description": "Geothermal hot springs in Porac, Pampanga at the foot of Mount Pinatubo.",
+    "address": "Porac, Pampanga",
+    "lat": 15.083,
+    "lng": 120.48,
+    "hours": "9:00 AM – 5:00 PM",
+    "contact": "(045) 962 2345",
+    "rates": "₱500 entrance",
+    "amenities": [
+      "Hot springs",
+      "Mud pack",
+      "Spa"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Porac, Pampanga via NLEX"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "mount-arayat-pampanga",
+    "name": "Mount Arayat",
+    "category": "Tourist Spot",
+    "image": "assets/images/resort.jpg",
+    "description": "Dormant volcano in Arayat, Pampanga with hiking trails and legends.",
+    "address": "Arayat, Pampanga",
+    "lat": 15.15,
+    "lng": 120.75,
+    "hours": "6:00 AM – 4:00 PM",
+    "contact": "(045) 861 2345",
+    "rates": "₱100 entrance",
+    "amenities": [
+      "Hiking trail",
+      "Park"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Arayat, Pampanga via NLEX"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "enchanted-kingdom-laguna",
+    "name": "Enchanted Kingdom",
+    "category": "Tourist Spot",
+    "image": "assets/images/bulalo.jpg",
+    "description": "Theme park in Santa Rosa, Laguna with rides and attractions for all ages.",
+    "address": "Santa Rosa, Laguna",
+    "lat": 14.3081,
+    "lng": 121.0901,
+    "hours": "10:00 AM – 9:00 PM",
+    "contact": "(049) 530 0123",
+    "rates": "₱700 entrance",
+    "amenities": [
+      "Rides",
+      "Shows",
+      "Food court"
+    ],
+    "routes": [
+      {
+        "mode": "Car",
+        "detail": "Drive from Manila to Santa Rosa, Laguna via SLEX"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "baguio-botanical-garden",
+    "name": "Baguio Botanical Garden",
+    "category": "Tourist Spot",
+    "image": "assets/images/cafe.jpg",
+    "description": "Botanical garden in Baguio City featuring indigenous plants and Igorot tribal huts.",
+    "address": "Baguio City, Benguet",
+    "lat": 16.417,
+    "lng": 120.5962,
+    "hours": "8:00 AM – 5:00 PM",
+    "contact": "(074) 442 2345",
+    "rates": "₱50 entrance",
+    "amenities": [
+      "Garden",
+      "Tribal huts",
+      "Walking trails"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Baguio City"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "camp-john-hay-baguio",
+    "name": "Camp John Hay",
+    "category": "Tourist Spot",
+    "image": "assets/images/resort.jpg",
+    "description": "Former US military facility turned resort in Baguio with golf course and pine forests.",
+    "address": "Baguio City, Benguet",
+    "lat": 16.435,
+    "lng": 120.5861,
+    "hours": "Open 24 hours",
+    "contact": "(074) 442 2346",
+    "rates": "₱100 entrance",
+    "amenities": [
+      "Golf course",
+      "Pine forest",
+      "Hotel"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Baguio City"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "mount-pulag-benguet",
+    "name": "Mount Pulag",
+    "category": "Tourist Spot",
+    "image": "assets/images/taal.jpg",
+    "description": "Third highest mountain in the Philippines known for sea of clouds and sunrise views.",
+    "address": "Kabayan, Benguet",
+    "lat": 16.5579,
+    "lng": 120.9148,
+    "hours": "6:00 AM – 2:00 PM",
+    "contact": "(074) 382 2345",
+    "rates": "₱500 trek fee",
+    "amenities": [
+      "Trekking",
+      "Camping",
+      "Sea of clouds"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Kabayan, Benguet"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  },
+  {
+    "id": "batad-rice-terraces-ifugao",
+    "name": "Batad Rice Terraces",
+    "category": "Tourist Spot",
+    "image": "assets/images/bulalo.jpg",
+    "description": "Amphitheater-shaped rice terraces in Batad, Banaue, Ifugao. UNESCO World Heritage Site.",
+    "address": "Batad, Banaue, Ifugao",
+    "lat": 16.892,
+    "lng": 121.05,
+    "hours": "Open 24 hours",
+    "contact": "(074) 386 2346",
+    "rates": "Free entry",
+    "amenities": [
+      "Viewing deck",
+      "Trekking",
+      "Homestay"
+    ],
+    "routes": [
+      {
+        "mode": "Bus",
+        "detail": "Take a bus from Manila to Banaue, then tricycle to Batad"
+      }
+    ],
+    "status": "Verified",
+    "sponsored": false,
+    "is_sample": true,
+    "source_updated": "Oct 17, 2026",
+    "sample_reviews": []
+  }
+]

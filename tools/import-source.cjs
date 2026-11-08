@@ -1,0 +1,15 @@
+const fs = require('fs');
+const vm = require('vm');
+const path = require('path');
+const root = path.resolve(__dirname, '../..');
+const input = fs.readFileSync(path.join(root, '.source-pasyalph/src/lib/data.ts'), 'utf8');
+const expression = input.split('export const places: Place[] = ')[1].split('\nexport const categories:')[0].trim().replace(/;$/, '');
+const images = Object.fromEntries(['taal', 'bulalo', 'cafe', 'resort'].map(n => [n, `assets/images/${n}.jpg`]));
+const places = vm.runInNewContext(expression, images, {timeout: 1000});
+const rows = places.map(p => ({id:p.id, name:p.name, category:p.category, image:p.image, description:p.description, address:p.address, lat:p.lat, lng:p.lng, hours:p.hours, contact:p.contact, rates:p.rates, amenities:p.amenities, routes:p.routes, status:'Verified', sponsored:!!p.sponsored, is_sample:true, source_updated:p.updated, sample_reviews:p.reviews}));
+fs.mkdirSync(path.join(__dirname, '../assets/data'), {recursive:true});
+fs.writeFileSync(path.join(__dirname, '../assets/data/catalog.json'), JSON.stringify(rows, null, 2));
+const columns = 'id,name,category,image,description,address,lat,lng,hours,contact,rates,amenities,routes,status,sponsored,is_sample,source_updated,sample_reviews';
+const definition = 'id text,name text,category text,image text,description text,address text,lat double precision,lng double precision,hours text,contact text,rates text,amenities jsonb,routes jsonb,status text,sponsored boolean,is_sample boolean,source_updated text,sample_reviews jsonb';
+fs.writeFileSync(path.join(__dirname,'../sql/04_original_sample_catalog.sql'),`-- PENDING APPROVAL. Original app sample data, not independently verified.\n-- Preserves existing rows with matching source IDs. Does not import fake user accounts or reviews.\ninsert into public.places(${columns})\nselect ${columns} from jsonb_to_recordset($catalog$${JSON.stringify(rows)}$catalog$::jsonb)\nas source(${definition})\non conflict(id) do nothing;\n`);
+console.log(`Imported ${rows.length} original sample places; sample reviews remain separate from real user reviews.`);

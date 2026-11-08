@@ -1,0 +1,13 @@
+{
+  "dart.flutterSdkPath": "../.tools/flutter",
+  "deno.enablePaths": ["supabase/functions"],
+  "deno.path": "../.tools/deno/deno.exe",
+  "search.exclude": {
+    "build": true,
+    ".dart_tool": true
+  },
+  "files.watcherExclude": {
+    "**/build/**": true,
+    "**/.dart_tool/**": true
+  }
+}
