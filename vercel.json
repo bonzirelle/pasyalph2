@@ -3,6 +3,18 @@
   "framework": null,
   "buildCommand": "bash scripts/vercel-build.sh",
   "outputDirectory": "build/web",
+  "redirects": [
+    {
+      "source": "/admin",
+      "destination": "/#/admin",
+      "permanent": false
+    },
+    {
+      "source": "/moderation",
+      "destination": "/#/moderation",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
