@@ -19,16 +19,41 @@ const _adminStatuses = [
 const _adminGreen = Color(0xff2e735c);
 const _adminPale = Color(0xffeaf3ed);
 
+const _adminSectionRoutes = [
+  '/admin',
+  '/admin/listings',
+  '/admin/accommodations',
+  '/admin/destinations',
+  '/admin/applications',
+];
+
+int adminSectionForRoute(String route) =>
+    _adminSectionRoutes.indexOf(route)
+        .clamp(0, _adminSectionRoutes.length - 1)
+        .toInt();
+
+String adminRouteForSection(int section) => _adminSectionRoutes[
+    section.clamp(0, _adminSectionRoutes.length - 1).toInt()];
+
+bool isAdminRoute(String route) =>
+    route == '/moderation' ||
+    route == '/admin' ||
+    route.startsWith('/admin/');
+
 class AdminPortal extends StatefulWidget {
-  const AdminPortal({super.key});
+  const AdminPortal(
+      {super.key, this.initialSection = 0, this.initialStatus = 'All statuses'});
+  final int initialSection;
+  final String initialStatus;
+
   @override
   State<AdminPortal> createState() => _AdminPortalState();
 }
 
 class _AdminPortalState extends State<AdminPortal> {
-  int section = 0;
+  late int section;
   String search = '';
-  String status = 'All statuses';
+  late String status;
 
   static const _sections = [
     ('Overview', Icons.space_dashboard_outlined),
@@ -37,6 +62,26 @@ class _AdminPortalState extends State<AdminPortal> {
     ('Destinations', Icons.landscape_outlined),
     ('Applications', Icons.assignment_outlined),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    section = widget.initialSection.clamp(0, _sections.length - 1).toInt();
+    status = widget.initialStatus;
+  }
+
+  void _openSection(int index, {String? statusFilter}) {
+    if (statusFilter != null) status = statusFilter;
+    final route = adminRouteForSection(index);
+    if (route == adminRouteForSection(section)) {
+      setState(() {});
+      return;
+    }
+    final destination = statusFilter == null
+        ? route
+        : Uri(path: route, queryParameters: {'status': statusFilter}).toString();
+    Navigator.of(context).pushReplacementNamed(destination);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +161,7 @@ class _AdminPortalState extends State<AdminPortal> {
                     ),
                   ),
                 ],
-              ),
+                ),
             ),
           ],
         ),
@@ -144,27 +189,36 @@ class _AdminPortalState extends State<AdminPortal> {
                           letterSpacing: .5))),
             ]),
             const SizedBox(height: 36),
-            const Padding(
-              padding: EdgeInsets.only(left: 12, bottom: 10),
-              child: Text('WORKSPACE',
-                  style: TextStyle(
-                      color: Color(0xffa5c1b6),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 1.3)),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 12, bottom: 10),
+                    child: Text('WORKSPACE',
+                        style: TextStyle(
+                            color: Color(0xffa5c1b6),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 1.3)),
+                  ),
+                  for (var i = 0; i < _sections.length; i++)
+                    _navItem(i, app),
+                  ListTile(
+                    dense: true,
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 10),
+                    leading: const Icon(Icons.fact_check_outlined,
+                        color: Color(0xffc4d8cf), size: 20),
+                    title: const Text('Moderation queue',
+                        style: TextStyle(
+                            color: Color(0xffe0ece6), fontSize: 12)),
+                    onTap: () =>
+                        Navigator.of(context).pushNamed('/moderation'),
+                  ),
+                ],
             ),
-            for (var i = 0; i < _sections.length; i++)
-              _navItem(i, app),
-            ListTile(
-              dense: true,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-              leading: const Icon(Icons.fact_check_outlined,
-                  color: Color(0xffc4d8cf), size: 20),
-              title: const Text('Moderation queue',
-                  style: TextStyle(color: Color(0xffe0ece6), fontSize: 12)),
-              onTap: () => Navigator.of(context).pushNamed('/moderation'),
             ),
-            const Spacer(),
             const Divider(color: Color(0x447fa7a0)),
             ListTile(
               dense: true,
@@ -223,7 +277,7 @@ class _AdminPortalState extends State<AdminPortal> {
                         fontSize: 10,
                         fontWeight: FontWeight.w800)))
             : null,
-        onTap: () => setState(() => section = index),
+        onTap: () => _openSection(index),
       ),
     );
   }
@@ -301,7 +355,17 @@ class _AdminPortalState extends State<AdminPortal> {
                   label: Text(_sections[i].$1,
                       style: const TextStyle(fontSize: 10)),
                   selected: section == i,
-                  onSelected: (_) => setState(() => section = i),
+                  onSelected: (_) => _openSection(i),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 6),
+                child: ActionChip(
+                  avatar: const Icon(Icons.fact_check_outlined, size: 15),
+                  label: const Text('Moderation',
+                      style: TextStyle(fontSize: 10)),
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed('/moderation'),
                 ),
               )
           ],
@@ -358,8 +422,19 @@ class _AdminPortalState extends State<AdminPortal> {
             spacing: 14,
             runSpacing: 14,
             children: [
-              for (final metric in cards)
-                SizedBox(width: width, child: _metricCard(metric))
+              for (var i = 0; i < cards.length; i++)
+                SizedBox(
+                  width: width,
+                  child: _metricCard(
+                    cards[i],
+                    onTap: () => switch (i) {
+                      0 => _openSection(1),
+                      1 => _openSection(1, statusFilter: 'Verified'),
+                      2 => _openSection(2),
+                      _ => _openSection(3),
+                    },
+                  ),
+                )
             ],
           );
         }),
@@ -424,27 +499,42 @@ class _AdminPortalState extends State<AdminPortal> {
         ]),
       );
 
-  Widget _metricCard(_Metric metric) => Container(
-        padding: const EdgeInsets.all(17),
-        decoration: _cardDecoration(),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            width: 38,
-            height: 38,
-            decoration: BoxDecoration(
-                color: metric.background,
-                borderRadius: BorderRadius.circular(12)),
-            child: Icon(metric.icon, color: metric.color, size: 20),
+  Widget _metricCard(_Metric metric, {required VoidCallback onTap}) =>
+      Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+            padding: const EdgeInsets.all(17),
+            decoration: _cardDecoration(),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Container(
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                    color: metric.background,
+                    borderRadius: BorderRadius.circular(12)),
+                child: Icon(metric.icon, color: metric.color, size: 20),
+              ),
+              const SizedBox(height: 15),
+              Text(metric.value,
+                  style: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.w800)),
+              Text(metric.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 10, color: muted)),
+              const SizedBox(height: 5),
+              Text('View details',
+                  style: TextStyle(
+                      color: metric.color,
+                      fontSize: 9,
+                      fontWeight: FontWeight.w700)),
+            ]),
           ),
-          const SizedBox(height: 15),
-          Text(metric.value,
-              style:
-                  const TextStyle(fontSize: 25, fontWeight: FontWeight.w800)),
-          Text(metric.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 10, color: muted)),
-        ]),
+        ),
       );
 
   Widget _statusCard(List<JsonMap> places) {
@@ -461,37 +551,41 @@ class _AdminPortalState extends State<AdminPortal> {
       child: Column(
         children: [
           for (final item in values)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 13),
-              child: Row(children: [
-                SizedBox(
-                    width: 125,
-                    child: Text(item.$1,
-                        style: const TextStyle(fontSize: 10, color: muted))),
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: LinearProgressIndicator(
-                      minHeight: 8,
-                      value: total == 0
-                          ? 0
-                          : places
-                                  .where((p) => p['status'] == item.$1)
-                                  .length /
-                              total,
-                      backgroundColor: const Color(0xffeef1ee),
-                      color: item.$2,
+            InkWell(
+              onTap: () => _openSection(1, statusFilter: item.$1),
+              borderRadius: BorderRadius.circular(8),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 13),
+                child: Row(children: [
+                  SizedBox(
+                      width: 125,
+                      child: Text(item.$1,
+                          style: const TextStyle(fontSize: 10, color: muted))),
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: LinearProgressIndicator(
+                        minHeight: 8,
+                        value: total == 0
+                            ? 0
+                            : places
+                                    .where((p) => p['status'] == item.$1)
+                                    .length /
+                                total,
+                        backgroundColor: const Color(0xffeef1ee),
+                        color: item.$2,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                    width: 38,
-                    child: Text(
-                        '${places.where((p) => p['status'] == item.$1).length}',
-                        textAlign: TextAlign.end,
-                        style: const TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.w800))),
-              ]),
+                  SizedBox(
+                      width: 38,
+                      child: Text(
+                          '${places.where((p) => p['status'] == item.$1).length}',
+                          textAlign: TextAlign.end,
+                          style: const TextStyle(
+                              fontSize: 10, fontWeight: FontWeight.w800))),
+                ]),
+              ),
             ),
           Align(
             alignment: Alignment.centerLeft,
@@ -510,14 +604,12 @@ class _AdminPortalState extends State<AdminPortal> {
         child: Column(children: [
           _attentionRow(Icons.hourglass_top, 'Listings to verify', '$pending',
               const Color(0xffd69a36),
-              onTap: () => setState(() {
-                    section = 1;
-                    status = 'Pending Verification';
-                  })),
+              onTap: () =>
+                  _openSection(1, statusFilter: 'Pending Verification')),
           const Divider(height: 20),
           _attentionRow(Icons.business_center_outlined, 'Owner applications',
               '$pendingOwners', _adminGreen,
-              onTap: () => setState(() => section = 4)),
+              onTap: () => _openSection(4)),
           const Divider(height: 20),
           _attentionRow(
               Icons.reviews_outlined, 'Traveler reviews', '${AppScope.of(context).reviews.length}',
@@ -556,7 +648,7 @@ class _AdminPortalState extends State<AdminPortal> {
       title: 'Recently updated',
       subtitle: 'The latest listings in your catalog',
       trailing: TextButton(
-          onPressed: () => setState(() => section = 1),
+          onPressed: () => _openSection(1),
           child: const Text('View all', style: TextStyle(fontSize: 10))),
       child: recent.isEmpty
           ? const Text('No live listings yet.',

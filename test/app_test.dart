@@ -14,6 +14,7 @@ import 'package:pasyalph_supabase_flutter/main.dart';
 import 'package:pasyalph_supabase_flutter/app_state.dart';
 import 'package:pasyalph_supabase_flutter/assistant.dart';
 import 'package:pasyalph_supabase_flutter/account.dart';
+import 'package:pasyalph_supabase_flutter/admin.dart';
 import 'package:pasyalph_supabase_flutter/ui.dart';
 
 late List<JsonMap> seed;
@@ -84,6 +85,18 @@ void main() {
         initialRouteFromUri(Uri.parse('https://example.test/admin')), '/admin');
     expect(initialRouteFromUri(Uri.parse('https://example.test/#/admin')),
         '/admin');
+    expect(
+        initialRouteFromUri(
+            Uri.parse('https://example.test/#/admin/accommodations')),
+        '/admin/accommodations');
+    expect(
+        initialRouteFromUri(
+            Uri.parse('https://example.test/admin/listings?status=Verified')),
+        '/admin/listings?status=Verified');
+    expect(adminSectionForRoute('/admin/destinations'), 3);
+    expect(adminRouteForSection(4), '/admin/applications');
+    expect(isAdminRoute('/admin/accommodations'), isTrue);
+    expect(isAdminRoute('/moderation'), isTrue);
     expect(initialRouteFromUri(Uri.parse('https://example.test/')), '/');
   });
   test('Sample saves persist locally without creating Supabase rows', () async {

@@ -54,9 +54,12 @@ or Flutter `--dart-define` values.
   satellite and terrain tiles, driving/walking/cycling alternatives and navigation
   steps. Transit opens external directions. Estimates do not include live traffic.
 - Responsive web admin portal at `/#/admin` for live catalog analytics and CRUD of
-  business listings, accommodations, and destinations. Admin access is enforced
-  by the signed-in Supabase profile role and database RLS; it does not grant or
-  provision administrator privileges.
+  business listings, accommodations, and destinations. Its navigation links can
+  open the overview, `/#/admin/listings`, `/#/admin/accommodations`,
+  `/#/admin/destinations`, and `/#/admin/applications` directly; dashboard
+  metrics and status rows link to their filtered catalog views. Admin access is
+  enforced by the signed-in Supabase profile role and database RLS; it does not
+  grant or provision administrator privileges.
 - Catalog travel guide, optional server-side Gemini assistant, trip planning,
   copy/share actions, and a guarded account-deletion flow.
 - Android project with network/location permissions and the auth callback intent.
