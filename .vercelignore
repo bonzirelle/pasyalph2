@@ -1,0 +1,14 @@
+.git/
+.vercel/
+.dart_tool/
+.widget_preview/
+build/
+test/
+android/
+.idea/
+artifacts/
+docs/
+sql/
+supabase/
+.env*
+*.iml

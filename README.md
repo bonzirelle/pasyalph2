@@ -57,9 +57,11 @@ or Flutter `--dart-define` values.
   steps. Transit opens external directions. Estimates do not include live traffic.
 - Separate responsive HTML/CSS/JavaScript administrator website at `/admin/`.
   Existing admin accounts can sign in to create, edit, and delete places and
-  manage dated promotion campaigns. Supabase Auth and database RLS enforce
-  administrator access, including application approvals and report resolution;
-  the site never provisions admin roles or uses a service-role key.
+  manage dated promotion campaigns, business applications, and traveler reports.
+  Its dashboard summarizes listing, promotion, application, and report activity.
+  Supabase Auth and database RLS enforce administrator access. Additional admin
+  accounts can be provisioned through the protected Supabase Edge Function; the
+  browser never receives a service-role key.
 - Catalog travel guide, optional server-side Gemini assistant, trip planning,
   copy/share actions, and a guarded account-deletion flow.
 - Android project with network/location permissions and the auth callback intent.
@@ -99,7 +101,11 @@ and add that origin to Supabase Auth's allowed redirect URLs and the
 `APP_ALLOWED_ORIGINS` Supabase Function secret. Deploy
 `supabase/functions/admin-create-user` before creating admin accounts. The
 website confirms the supplied email and sets a temporary password; verify the
-address and deliver that password securely.
+address and deliver that password securely. For the first administrator, create
+and confirm an account through normal app signup, then assign `role = 'admin'`
+to that exact email in the Supabase SQL Editor as described in
+[supabase/README.md](supabase/README.md). If sign-in succeeds but the admin
+portal rejects the account, check its profile role and email confirmation.
 For Gmail delivery, email templates, and auth redirect setup, see
 [docs/EMAIL_AUTH_SETUP.md](docs/EMAIL_AUTH_SETUP.md).
 

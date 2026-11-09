@@ -19,6 +19,9 @@ let reports = [];
 let editingPlace = null;
 let editingPromotion = null;
 let recoveryMode = false;
+let dashboardCounts = { places: null, promotions: null, applications: null, reports: null, activePromotions: null, pendingApplications: null, openReports: null };
+let sessionGeneration = 0;
+let activeAdminId = null;
 
 function notice(element, message = '', isError = false) {
   element.textContent = message;
@@ -56,34 +59,63 @@ function timestamp(value) {
   return parsed.toISOString();
 }
 
+function friendlyAuthError(error) {
+  const message = String(error?.message ?? '');
+  if (error?.code === 'invalid_credentials' || /invalid login credentials/i.test(message)) {
+    return 'Email or password is incorrect. Check your credentials or use password recovery.';
+  }
+  if (error?.code === 'email_not_confirmed' || /email not confirmed/i.test(message)) {
+    return 'Confirm your email address before signing in.';
+  }
+  if (/too many requests/i.test(message)) {
+    return 'Too many sign-in attempts. Wait a few minutes, then try again.';
+  }
+  if (/failed to fetch|networkerror/i.test(message)) {
+    return 'Could not reach Supabase. Check your connection and the configured project URL.';
+  }
+  return message || 'Sign-in failed. Please try again.';
+}
+
 async function showSession(session) {
+  const generation = ++sessionGeneration;
   if (!session) {
+    activeAdminId = null;
     authPanel.hidden = false;
     workspace.hidden = true;
     byId('account-bar').hidden = true;
     return;
   }
 
-  const { data: profile, error } = await client
-    .from('profiles')
-    .select('role')
-    .eq('id', session.user.id)
-    .maybeSingle();
-  if (error) {
-    notice(authMessage, error.message, true);
-    return;
-  }
-  if (profile?.role !== 'admin') {
-    notice(authMessage, 'Administrator access is required for this website.', true);
-    await client.auth.signOut();
-    return;
-  }
+  if (activeAdminId === session.user.id && !workspace.hidden) return;
+  try {
+    const { data: profile, error } = await client
+      .from('profiles')
+      .select('role')
+      .eq('id', session.user.id)
+      .maybeSingle();
+    if (generation !== sessionGeneration) return;
+    if (error) {
+      notice(authMessage, `You signed in, but administrator access could not be verified: ${error.message}`, true);
+      return;
+    }
+    if (profile?.role !== 'admin') {
+      byId('first-admin-help').open = true;
+      notice(authMessage, 'You signed in, but this account does not have the administrator role. Follow the first-administrator setup instructions below, then sign in again.', true);
+      await client.auth.signOut();
+      return;
+    }
 
-  authPanel.hidden = true;
-  workspace.hidden = false;
-  byId('account-bar').hidden = false;
-  byId('account-email').textContent = session.user.email ?? '';
-  await loadData();
+    activeAdminId = session.user.id;
+    authPanel.hidden = true;
+    workspace.hidden = false;
+    byId('account-bar').hidden = false;
+    byId('account-email').textContent = session.user.email ?? '';
+    await loadData();
+  } catch (error) {
+    if (generation === sessionGeneration) {
+      notice(authMessage, `Could not verify this administrator session: ${friendlyAuthError(error)}`, true);
+    }
+  }
 }
 
 function renderPlaces() {
@@ -199,6 +231,76 @@ function renderReports() {
   });
 }
 
+function renderBars(container, entries, emptyMessage) {
+  if (entries.length === 0) {
+    container.innerHTML = `<p class="empty">${escapeHtml(emptyMessage)}</p>`;
+    return;
+  }
+  const maximum = Math.max(...entries.map((entry) => entry.value), 1);
+  container.innerHTML = entries.map((entry) => `
+    <div class="bar-row">
+      <span class="bar-label" title="${escapeHtml(entry.label)}">${escapeHtml(entry.label)}</span>
+      <span class="bar-track"><span class="bar-fill" style="--bar-width:${Math.round(entry.value / maximum * 100)}%"></span></span>
+      <span class="bar-value">${entry.value}</span>
+    </div>`).join('');
+}
+
+function renderDashboard() {
+  const activePromotions = promotions.filter((promotion) =>
+    promotion.active && new Date(promotion.starts_at) <= new Date() && new Date(promotion.ends_at) > new Date());
+  const pendingApplications = applications.filter((application) => application.status === 'Pending review');
+  const openReports = reports.filter((report) => report.status === 'Open');
+  byId('metric-places').textContent = dashboardCounts.places ?? '—';
+  byId('metric-promotions').textContent = dashboardCounts.activePromotions ?? activePromotions.length;
+  byId('metric-applications').textContent = dashboardCounts.pendingApplications ?? pendingApplications.length;
+  byId('metric-reports').textContent = dashboardCounts.openReports ?? openReports.length;
+
+  const now = new Date();
+  const months = Array.from({ length: 6 }, (_, index) => {
+    const date = new Date(now.getFullYear(), now.getMonth() - (5 - index), 1);
+    return {
+      key: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`,
+      label: date.toLocaleString(undefined, { month: 'short' }),
+      value: 0,
+    };
+  });
+  const monthByKey = new Map(months.map((month) => [month.key, month]));
+  for (const report of reports) {
+    const date = new Date(report.created_at);
+    if (Number.isNaN(date.getTime())) continue;
+    const month = monthByKey.get(`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`);
+    if (month) month.value += 1;
+  }
+  renderBars(byId('report-trend'), months, 'No report history is available.');
+
+  const placeStatuses = new Map();
+  for (const place of places) placeStatuses.set(place.status || 'Unknown', (placeStatuses.get(place.status || 'Unknown') ?? 0) + 1);
+  renderBars(byId('place-breakdown'), [...placeStatuses].map(([label, value]) => ({ label, value })), 'No place records are available.');
+
+  const applicationStatuses = new Map();
+  for (const application of applications) {
+    const label = application.status || 'Unknown';
+    applicationStatuses.set(label, (applicationStatuses.get(label) ?? 0) + 1);
+  }
+  renderBars(byId('application-breakdown'), [...applicationStatuses].map(([label, value]) => ({ label, value })), 'No business applications are available.');
+
+  const reportCountsByPlace = new Map();
+  for (const report of reports) {
+    const place = places.find((item) => item.id === report.place_id);
+    const label = place?.name ?? 'Place unavailable';
+    reportCountsByPlace.set(label, (reportCountsByPlace.get(label) ?? 0) + 1);
+  }
+  const topPlaces = [...reportCountsByPlace].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const topPlacesContainer = byId('top-reported-places');
+  topPlacesContainer.innerHTML = topPlaces.length
+    ? topPlaces.map(([name, count]) => `
+      <article class="record">
+        <div><h3>${escapeHtml(name)}</h3><p>${count} report${count === 1 ? '' : 's'}</p></div>
+        <span class="count">${count}</span>
+      </article>`).join('')
+    : '<p class="empty">There are no place reports.</p>';
+}
+
 function renderPlaceOptions(selectedId = '') {
   const select = promotionForm.elements.place_id;
   select.innerHTML = '<option value="">Select a place</option>' + places.map((place) =>
@@ -208,30 +310,60 @@ function renderPlaceOptions(selectedId = '') {
 
 async function loadData() {
   notice(workspaceMessage, 'Loading database records…');
+  let results;
   try {
-    const [placeResult, promotionResult, applicationResult, reportResult] = await Promise.all([
-      client.from('places').select('*').order('name'),
-      client.from('promotions').select('*').order('starts_at', { ascending: false }),
-      client.from('business_applications').select('*').order('created_at', { ascending: false }),
-      client.from('reports').select('*').order('created_at', { ascending: false }),
+    results = await Promise.all([
+      client.from('places').select('*', { count: 'exact' }).order('name'),
+      client.from('promotions').select('*', { count: 'exact' }).order('starts_at', { ascending: false }),
+      client.from('business_applications').select('*', { count: 'exact' }).order('created_at', { ascending: false }),
+      client.from('reports').select('*', { count: 'exact' }).order('created_at', { ascending: false }),
+      client.from('promotions').select('id', { count: 'exact', head: true }).eq('active', true).lte('starts_at', new Date().toISOString()).gt('ends_at', new Date().toISOString()),
+      client.from('business_applications').select('id', { count: 'exact', head: true }).eq('status', 'Pending review'),
+      client.from('reports').select('id', { count: 'exact', head: true }).eq('status', 'Open'),
     ]);
-    if (placeResult.error) throw placeResult.error;
-    if (promotionResult.error) throw promotionResult.error;
-    if (applicationResult.error) throw applicationResult.error;
-    if (reportResult.error) throw reportResult.error;
-    places = placeResult.data ?? [];
-    promotions = promotionResult.data ?? [];
-    applications = applicationResult.data ?? [];
-    reports = reportResult.data ?? [];
-    renderPlaces();
-    renderPlaceOptions();
-    renderPromotions();
-    renderApplications();
-    renderReports();
-    notice(workspaceMessage);
   } catch (error) {
-    notice(workspaceMessage, `Could not load data: ${error.message}`, true);
+    notice(workspaceMessage, `Could not connect to the app database: ${friendlyAuthError(error)}`, true);
+    return;
   }
+  const [placeResult, promotionResult, applicationResult, reportResult, activePromotionCount, pendingApplicationCount, openReportCount] = results;
+  const warnings = [];
+  const datasets = [
+    ['Places', placeResult, 'places'],
+    ['Promotions', promotionResult, 'promotions'],
+    ['Business applications', applicationResult, 'applications'],
+    ['Reports', reportResult, 'reports'],
+  ];
+  for (const [label, result, key] of datasets) {
+    if (result.error) {
+      warnings.push(`${label}: ${result.error.message}`);
+      dashboardCounts[key] = null;
+    } else {
+      dashboardCounts[key] = result.count;
+    }
+  }
+  if (!placeResult.error) places = placeResult.data ?? [];
+  if (!promotionResult.error) promotions = promotionResult.data ?? [];
+  if (!applicationResult.error) applications = applicationResult.data ?? [];
+  if (!reportResult.error) reports = reportResult.data ?? [];
+  dashboardCounts.activePromotions = activePromotionCount.error ? null : activePromotionCount.count;
+  dashboardCounts.pendingApplications = pendingApplicationCount.error ? null : pendingApplicationCount.count;
+  dashboardCounts.openReports = openReportCount.error ? null : openReportCount.count;
+  for (const [label, result] of [
+    ['Active promotions', activePromotionCount],
+    ['Pending applications', pendingApplicationCount],
+    ['Open reports', openReportCount],
+  ]) {
+    if (result.error) warnings.push(`${label} count: ${result.error.message}`);
+  }
+  renderPlaces();
+  renderPlaceOptions();
+  renderPromotions();
+  renderApplications();
+  renderReports();
+  renderDashboard();
+  notice(workspaceMessage, warnings.length
+    ? `Some dashboard data could not be loaded. ${warnings.join(' · ')}`
+    : '');
 }
 
 function resetPlaceForm() {
@@ -450,19 +582,25 @@ promotionForm.addEventListener('submit', async (event) => {
 
 byId('login-form').addEventListener('submit', async (event) => {
   event.preventDefault();
-  setBusy(event.currentTarget, true);
+  const formElement = event.currentTarget;
+  setBusy(formElement, true);
   notice(authMessage);
-  const form = new FormData(event.currentTarget);
-  const { data, error } = await client.auth.signInWithPassword({
-    email: String(form.get('email')).trim(),
-    password: form.get('password'),
-  });
-  setBusy(event.currentTarget, false);
-  if (error) {
-    notice(authMessage, error.message, true);
-    return;
+  const form = new FormData(formElement);
+  try {
+    const { data, error } = await client.auth.signInWithPassword({
+      email: String(form.get('email')).trim(),
+      password: form.get('password'),
+    });
+    if (error) {
+      notice(authMessage, friendlyAuthError(error), true);
+      return;
+    }
+    await showSession(data.session);
+  } catch (error) {
+    notice(authMessage, friendlyAuthError(error), true);
+  } finally {
+    setBusy(formElement, false);
   }
-  await showSession(data.session);
 });
 
 byId('forgot-link').addEventListener('click', async () => {
@@ -472,30 +610,40 @@ byId('forgot-link').addEventListener('click', async () => {
     return;
   }
   const redirectTo = new URL(window.location.pathname, window.location.origin).toString();
-  const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
-  notice(authMessage, error
-    ? `Could not send the reset email: ${error.message}`
-    : 'If the account exists, a secure password reset link will arrive in your inbox.', Boolean(error));
+  try {
+    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
+    notice(authMessage, error
+      ? `Could not send the reset email: ${error.message}`
+      : 'If the account exists, a secure password reset link will arrive in your inbox.', Boolean(error));
+  } catch (error) {
+    notice(authMessage, `Could not send the reset email: ${friendlyAuthError(error)}`, true);
+  }
 });
 
 byId('recovery-form').addEventListener('submit', async (event) => {
   event.preventDefault();
-  const form = new FormData(event.currentTarget);
+  const formElement = event.currentTarget;
+  const form = new FormData(formElement);
   const password = String(form.get('password'));
   if (password !== form.get('confirmation')) {
     notice(authMessage, 'The passwords do not match.', true);
     return;
   }
-  setBusy(event.currentTarget, true);
-  const { error } = await client.auth.updateUser({ password });
-  setBusy(event.currentTarget, false);
-  if (error) {
-    notice(authMessage, `Could not update password: ${error.message}`, true);
-    return;
+  setBusy(formElement, true);
+  try {
+    const { error } = await client.auth.updateUser({ password });
+    if (error) {
+      notice(authMessage, `Could not update password: ${error.message}`, true);
+      return;
+    }
+    setRecoveryVisible(false);
+    notice(authMessage, 'Password updated. Sign in with your new password.');
+    await client.auth.signOut();
+  } catch (error) {
+    notice(authMessage, `Could not update password: ${friendlyAuthError(error)}`, true);
+  } finally {
+    setBusy(formElement, false);
   }
-  setRecoveryVisible(false);
-  notice(authMessage, 'Password updated. Sign in with your new password.');
-  await client.auth.signOut();
 });
 
 byId('cancel-recovery').addEventListener('click', () => setRecoveryVisible(false));
@@ -505,7 +653,7 @@ byId('place-cancel').addEventListener('click', resetPlaceForm);
 byId('promotion-cancel').addEventListener('click', resetPromotionForm);
 document.querySelectorAll('.tab').forEach((tab) => tab.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach((item) => item.classList.toggle('active', item === tab));
-  for (const section of ['places', 'promotions', 'applications', 'reports', 'admins']) {
+  for (const section of ['dashboard', 'places', 'promotions', 'applications', 'reports', 'admins']) {
     byId(`${section}-section`).hidden = tab.dataset.tab !== section;
   }
 }));

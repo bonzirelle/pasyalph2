@@ -26,6 +26,17 @@
         <p class="eyebrow">ADMINISTRATION</p>
         <h1>Sign in to your workspace</h1>
         <p class="muted">Use an existing PasyalPH account with the administrator role.</p>
+        <details id="first-admin-help" class="setup-help">
+          <summary>Can't sign in or setting up the first administrator?</summary>
+          <p>First create an account through the PasyalPH app and confirm its email. Then, in the Supabase Dashboard SQL Editor, assign the administrator role to that exact email:</p>
+          <pre><code>update public.profiles p
+set role = 'admin'
+from auth.users u
+where p.id = u.id
+  and lower(u.email) = lower('your-email@example.com')
+returning u.email, p.role;</code></pre>
+          <p>Replace the example email and confirm the returned account is the intended one. Passwords cannot be viewed in the database; use password recovery if needed.</p>
+        </details>
         <form id="login-form" class="stack">
           <label>Email address<input name="email" type="email" autocomplete="username" required></label>
           <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
@@ -45,23 +56,52 @@
       <section id="workspace" hidden>
         <div class="page-heading">
           <div>
-            <p class="eyebrow">CONTENT WORKSPACE</p>
-            <h1>Manage places and promotions</h1>
-            <p class="muted">Changes are saved to the PasyalPH Supabase database.</p>
+            <p class="eyebrow">ADMIN WORKSPACE</p>
+            <h1>App dashboard</h1>
+            <p class="muted">Live operational analytics from places, promotions, business applications, and traveler reports.</p>
           </div>
           <button id="refresh" class="button button-outline" type="button">Refresh data</button>
         </div>
         <p id="workspace-message" class="notice" role="status" aria-live="polite"></p>
 
         <nav class="tabs" aria-label="Admin sections">
-          <button class="tab active" data-tab="places" type="button">Places</button>
+          <button class="tab active" data-tab="dashboard" type="button">Dashboard</button>
+          <button class="tab" data-tab="places" type="button">Places</button>
           <button class="tab" data-tab="promotions" type="button">Promotions</button>
           <button class="tab" data-tab="applications" type="button">Applications</button>
           <button class="tab" data-tab="reports" type="button">Reports</button>
           <button class="tab" data-tab="admins" type="button">Admins</button>
         </nav>
 
-        <section id="places-section" class="workspace-grid">
+        <section id="dashboard-section" class="dashboard-section">
+          <div class="metric-grid">
+            <article class="panel metric"><span>Total places</span><strong id="metric-places">—</strong><small>Listings in the database</small></article>
+            <article class="panel metric"><span>Active promotions</span><strong id="metric-promotions">—</strong><small>Currently running campaigns</small></article>
+            <article class="panel metric"><span>Pending applications</span><strong id="metric-applications">—</strong><small>Awaiting administrator review</small></article>
+            <article class="panel metric"><span>Open reports</span><strong id="metric-reports">—</strong><small>Traveler reports to review</small></article>
+          </div>
+          <div class="analytics-grid">
+            <article class="panel analytics-card">
+              <div class="panel-heading"><div><p class="eyebrow">TRAVELER FEEDBACK</p><h2>Report volume</h2></div><span class="muted">Last 6 months</span></div>
+              <div id="report-trend" class="bar-list" aria-label="Monthly report volume"></div>
+            </article>
+            <article class="panel analytics-card">
+              <div class="panel-heading"><div><p class="eyebrow">LISTING HEALTH</p><h2>Places by status</h2></div></div>
+              <div id="place-breakdown" class="bar-list"></div>
+            </article>
+            <article class="panel analytics-card">
+              <div class="panel-heading"><div><p class="eyebrow">BUSINESS OWNERS</p><h2>Application status</h2></div></div>
+              <div id="application-breakdown" class="bar-list"></div>
+            </article>
+            <article class="panel analytics-card">
+              <div class="panel-heading"><div><p class="eyebrow">NEEDS ATTENTION</p><h2>Most reported places</h2></div></div>
+              <div id="top-reported-places" class="record-list"></div>
+            </article>
+          </div>
+          <p class="muted analytics-note">Charts summarize records available to this administrator. The app does not currently record visitor sessions or active-user telemetry, so this dashboard does not estimate those metrics.</p>
+        </section>
+
+        <section id="places-section" class="workspace-grid" hidden>
           <div class="panel editor">
             <div class="panel-heading">
               <div><p class="eyebrow">PLACE DETAILS</p><h2 id="place-form-title">Add a place</h2></div>

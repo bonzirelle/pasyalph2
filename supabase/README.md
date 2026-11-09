@@ -86,7 +86,11 @@ release described below.
 7. Deploy `admin-web/` under `/admin/` (the Vercel build copies it there), or
    deploy that folder to a separate static host. Add the exact admin site URL to
    Supabase Auth's redirect allowlist. The portal uses the public publishable key
-   and requires an existing profile with role `admin`.
+   and requires a confirmed account whose profile has role `admin`. The first
+   administrator must be assigned that role through the one-time SQL bootstrap
+   above; signing up alone does not grant administrator access. The dashboard
+   summarizes stored listing, promotion, application, and traveler-report data;
+   visitor-session and active-user telemetry are not currently collected.
 8. Run security/performance advisors. Test anonymous reads, traveler isolation,
    owner approval, protected columns, uploads, Realtime and destructive account
    deletion, promotion visibility, and admin CRUD in a test environment before
