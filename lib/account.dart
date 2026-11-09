@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app_state.dart';
+import 'config.dart';
 import 'ui.dart';
 import 'business.dart';
 import 'assistant.dart';
@@ -18,6 +19,13 @@ String authActionError(Object error) {
   if (error is AuthException) {
     final message = error.message;
     final lower = message.toLowerCase();
+    if (lower.contains('invalid login credentials')) {
+      return 'The email or password is incorrect. Check your details and try again.';
+    }
+    if (lower.contains('email not confirmed') ||
+        lower.contains('email address not confirmed')) {
+      return 'Confirm your email from the message we sent before logging in.';
+    }
     if (lower.contains('email address not authorized')) {
       return 'Supabase is using its limited test email service. Configure custom SMTP in Supabase Auth to send to Gmail and other addresses.';
     }
@@ -510,17 +518,11 @@ class ProfilePage extends StatelessWidget {
                                     Icons.admin_panel_settings_outlined),
                                 title: const Text('Admin portal',
                                     style: TextStyle(fontSize: 13)),
+                                subtitle: const Text(
+                                    'Open the separate admin website',
+                                    style: TextStyle(fontSize: 10)),
                                 trailing: const Icon(Icons.chevron_right),
-                                onTap: () =>
-                                    Navigator.of(context).pushNamed('/admin')),
-                          if (app.role == 'admin')
-                            ListTile(
-                                leading: const Icon(Icons.fact_check_outlined),
-                                title: const Text('Moderation queue',
-                                    style: TextStyle(fontSize: 13)),
-                                trailing: const Icon(Icons.chevron_right),
-                                onTap: () => Navigator.of(context)
-                                    .pushNamed('/moderation'))
+                                onTap: () => openUrl(context, adminPortalUrl)),
                         ])),
                   ],
                   const SectionTitle('App preferences'),

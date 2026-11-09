@@ -14,7 +14,6 @@ import 'package:pasyalph_supabase_flutter/main.dart';
 import 'package:pasyalph_supabase_flutter/app_state.dart';
 import 'package:pasyalph_supabase_flutter/assistant.dart';
 import 'package:pasyalph_supabase_flutter/account.dart';
-import 'package:pasyalph_supabase_flutter/admin.dart';
 import 'package:pasyalph_supabase_flutter/ui.dart';
 
 late List<JsonMap> seed;
@@ -82,22 +81,33 @@ void main() {
   });
   test('Web deep links select their initial named route', () {
     expect(
-        initialRouteFromUri(Uri.parse('https://example.test/admin')), '/admin');
-    expect(initialRouteFromUri(Uri.parse('https://example.test/#/admin')),
-        '/admin');
-    expect(
-        initialRouteFromUri(
-            Uri.parse('https://example.test/#/admin/accommodations')),
-        '/admin/accommodations');
-    expect(
-        initialRouteFromUri(
-            Uri.parse('https://example.test/admin/listings?status=Verified')),
-        '/admin/listings?status=Verified');
-    expect(adminSectionForRoute('/admin/destinations'), 3);
-    expect(adminRouteForSection(4), '/admin/applications');
-    expect(isAdminRoute('/admin/accommodations'), isTrue);
-    expect(isAdminRoute('/moderation'), isTrue);
+        initialRouteFromUri(Uri.parse('https://example.test/login')), '/login');
     expect(initialRouteFromUri(Uri.parse('https://example.test/')), '/');
+  });
+  test('Auth input and sign-in errors are actionable', () {
+    expect(validEmail(' traveler@example.test '), isTrue);
+    expect(validEmail('not-an-email'), isFalse);
+    expect(authActionError(AuthException('Invalid login credentials')),
+        contains('email or password is incorrect'));
+    expect(authActionError(AuthException('Email not confirmed')),
+        contains('Confirm your email'));
+  });
+  test('Missing promotions migration does not block the rest of the catalog',
+      () async {
+    final app = await fixture(
+        transport: MockClient((request) async => http.Response(
+              request.url.path.endsWith('/promotions')
+                  ? '{"code":"PGRST205","message":"table not found"}'
+                  : '[]',
+              request.url.path.endsWith('/promotions') ? 404 : 200,
+              headers: {'content-type': 'application/json; charset=utf-8'},
+              request: request,
+            )));
+    await app.refresh();
+    expect(app.loadError, isNull);
+    expect(app.promotions, isEmpty);
+    app.dispose();
+    await app.client.dispose();
   });
   test('Sample saves persist locally without creating Supabase rows', () async {
     final app = await fixture();
@@ -400,6 +410,35 @@ void main() {
 
     expect(otpRequests, 0);
     expect(find.text('Enter a valid email address first.'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox());
+    app.dispose();
+    await tester.runAsync(() => app.client.dispose());
+  });
+  testWidgets('Forgot password requests a secure reset email', (tester) async {
+    final requests = <http.Request>[];
+    final app = (await tester
+        .runAsync(() => fixture(transport: MockClient((request) async {
+              requests.add(request);
+              return http.Response('{}', 200, request: request);
+            }))))!;
+    await tester.pumpWidget(AppScope(
+        state: app,
+        child: MaterialApp(theme: appTheme(false), home: const AccountPage())));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+        find.byKey(const ValueKey('account-email')), 'traveler@example.test');
+    await tester.tap(find.text('Forgot password?'));
+    await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 100)));
+    await tester.pumpAndSettle();
+
+    expect(requests, hasLength(1));
+    expect(requests.single.url.path, endsWith('/auth/v1/recover'));
+    expect(requests.single.url.queryParameters['redirect_to'],
+        'com.pasyalph.app://login-callback/');
+    expect(jsonDecode(requests.single.body)['email'], 'traveler@example.test');
+    expect(find.textContaining('If this account exists'), findsOneWidget);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox());
     app.dispose();

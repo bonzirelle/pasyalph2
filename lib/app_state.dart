@@ -39,6 +39,7 @@ class AppState extends ChangeNotifier {
   final SharedPreferences prefs;
   List<JsonMap> places = [],
       reviews = [],
+      promotions = [],
       applications = [],
       reports = [],
       plans = [];
@@ -78,6 +79,8 @@ class AppState extends ChangeNotifier {
       places.where((p) => p['status'] == 'Verified').toList();
   List<JsonMap> reviewsFor(JsonMap p) =>
       reviews.where((r) => r['place_id'] == p['id']).toList();
+  List<JsonMap> promotionsFor(JsonMap p) =>
+      promotions.where((r) => r['place_id'] == p['id']).toList();
   List<JsonMap> sampleReviews(JsonMap p) =>
       ((p['sample_reviews'] as List?) ?? [])
           .map((r) => Map<String, dynamic>.from(r))
@@ -186,6 +189,7 @@ class AppState extends ChangeNotifier {
             .select()
             .order('created_at', ascending: false)
             .limit(1000),
+        _loadPromotions(),
       ]).timeout(const Duration(seconds: 20));
       if (generation != _generation) return;
       final remote = List<JsonMap>.from(data[0]);
@@ -199,6 +203,7 @@ class AppState extends ChangeNotifier {
       // from the bundled sample data when RLS or moderation removes them.
       places = _liveCatalogSeen ? remote : [...catalog];
       reviews = List<JsonMap>.from(data[1]);
+      promotions = List<JsonMap>.from(data[2] as List);
       loadError = null;
       if (user != null) {
         final uid = user!.id;
@@ -246,6 +251,24 @@ class AppState extends ChangeNotifier {
         refreshing = false;
         notifyListeners();
       }
+    }
+  }
+
+  Future<List<JsonMap>> _loadPromotions() async {
+    try {
+      final now = DateTime.now().toUtc().toIso8601String();
+      final rows = await client
+          .from('promotions')
+          .select()
+          .eq('active', true)
+          .lte('starts_at', now)
+          .gt('ends_at', now)
+          .order('ends_at')
+          .limit(500);
+      return List<JsonMap>.from(rows);
+    } on PostgrestException catch (e) {
+      if (['PGRST205', '42P01'].contains(e.code)) return [];
+      rethrow;
     }
   }
 

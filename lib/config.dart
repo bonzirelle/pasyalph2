@@ -5,3 +5,5 @@ const supabaseUrl = String.fromEnvironment('SUPABASE_URL',
 const supabasePublishableKey = String.fromEnvironment(
     'SUPABASE_PUBLISHABLE_KEY',
     defaultValue: 'sb_publishable_4t0n2OFqpjPAvD5657W7vg_VfPamvrV');
+const adminPortalUrl = String.fromEnvironment('ADMIN_PORTAL_URL',
+    defaultValue: 'https://pasyalph2.vercel.app/admin/');

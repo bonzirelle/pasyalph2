@@ -1,5 +1,5 @@
 {
   "tasks": {
-    "check": "deno check travel-assistant/index.ts delete-account/index.ts"
+    "check": "deno check travel-assistant/index.ts delete-account/index.ts admin-create-user/index.ts"
   }
 }

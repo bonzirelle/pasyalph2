@@ -21,3 +21,5 @@ export PATH="$(dirname "$FLUTTER"):$PATH"
 "$FLUTTER" config --no-analytics
 "$FLUTTER" pub get
 "$FLUTTER" build web --release --no-pub
+mkdir -p build/web/admin
+cp -R admin-web/. build/web/admin/

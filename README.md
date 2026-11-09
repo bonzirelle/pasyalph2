@@ -51,17 +51,15 @@ or Flutter `--dart-define` values.
   OAuth requires the provider credentials to be configured in Supabase; see
   [Google sign-in setup](supabase/README.md#enable-google-sign-in).
 - Saved places, profile editing, photo uploads, preferences, home/work addresses,
-  owner applications, listing submission/editing, and admin moderation interfaces.
+  owner applications, and business listing submission/editing.
 - Map search restricted to the Philippines, explicit location consent, street,
   satellite and terrain tiles, driving/walking/cycling alternatives and navigation
   steps. Transit opens external directions. Estimates do not include live traffic.
-- Responsive web admin portal at `/#/admin` for live catalog analytics and CRUD of
-  business listings, accommodations, and destinations. Its navigation links can
-  open the overview, `/#/admin/listings`, `/#/admin/accommodations`,
-  `/#/admin/destinations`, and `/#/admin/applications` directly; dashboard
-  metrics and status rows link to their filtered catalog views. Admin access is
-  enforced by the signed-in Supabase profile role and database RLS; it does not
-  grant or provision administrator privileges.
+- Separate responsive HTML/CSS/JavaScript administrator website at `/admin/`.
+  Existing admin accounts can sign in to create, edit, and delete places and
+  manage dated promotion campaigns. Supabase Auth and database RLS enforce
+  administrator access, including application approvals and report resolution;
+  the site never provisions admin roles or uses a service-role key.
 - Catalog travel guide, optional server-side Gemini assistant, trip planning,
   copy/share actions, and a guarded account-deletion flow.
 - Android project with network/location permissions and the auth callback intent.
@@ -91,10 +89,17 @@ the backend release is approved:
 
 No account is automatically granted owner/admin privileges. Business approval uses
 the existing administrator RPC. Existing Firebase users/passwords are not imported.
-The admin portal requires an account whose Supabase profile has the `admin` role,
-and the reviewed backend policies in `sql/03_flutter_feature_parity.sql` must be
-applied before catalog management is available. The portal does not use bundled
-sample listings as editable production data.
+The separate admin website requires an account whose Supabase profile has the
+`admin` role. Apply the reviewed backend policies in
+`sql/03_flutter_feature_parity.sql`, then apply `sql/06_promotions.sql` before
+using promotion management. The admin website does not use bundled sample
+listings as editable production data. The Vercel build publishes its static
+files under `/admin/`; for a separate host, deploy the contents of `admin-web/`
+and add that origin to Supabase Auth's allowed redirect URLs and the
+`APP_ALLOWED_ORIGINS` Supabase Function secret. Deploy
+`supabase/functions/admin-create-user` before creating admin accounts. The
+website confirms the supplied email and sets a temporary password; verify the
+address and deliver that password securely.
 For Gmail delivery, email templates, and auth redirect setup, see
 [docs/EMAIL_AUTH_SETUP.md](docs/EMAIL_AUTH_SETUP.md).
 
@@ -107,10 +112,12 @@ node --test tools/functions.test.mjs
 node --test tools/preview-server.test.mjs
 ```
 
-Forty Flutter tests cover sample integrity, save persistence, precise nearby
+Forty-six Flutter tests cover sample integrity, save persistence, precise nearby
 distances, location requirements, Explore/details, Saved, signup validation and
-the desktop frame, guest itineraries, profile refresh, concurrent preferences,
-cloud/device plan coexistence, and disposal during refresh.
+the desktop frame, signup email validation, password reset requests, graceful
+operation without the promotions migration, guest itineraries, profile refresh,
+concurrent preferences, cloud/device plan coexistence, and disposal during
+refresh.
 The map checks cover three phone sizes, separate search/filter/control regions,
 compact directions, map options, search focus, and visible destination markers.
 Fifteen location tests cover browser/native permission handling, timeouts,

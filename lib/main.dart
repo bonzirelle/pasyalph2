@@ -2,15 +2,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'app_state.dart';
 import 'config.dart';
+import 'app_state.dart';
 import 'ui.dart';
 import 'explore.dart';
 import 'map_page.dart';
 import 'account.dart';
 import 'assistant.dart';
-import 'admin.dart';
-import 'business.dart';
 
 String initialRouteFromUri(Uri uri) {
   final route = uri.path.isNotEmpty && uri.path != '/'
@@ -62,10 +60,6 @@ class PasyalPH extends StatelessWidget {
                         : ThemeMode.system,
                 builder: (context, child) =>
                     LayoutBuilder(builder: (context, c) {
-                  final route = isAdminRoute(Uri.base.path) ||
-                      isAdminRoute(
-                          Uri.tryParse(Uri.base.fragment)?.path ?? '');
-                  if (route) return child!;
                   final framed = c.maxWidth > 540;
                   final width = framed ? 430.0 : c.maxWidth;
                   final height = framed
@@ -117,30 +111,6 @@ class PasyalPH extends StatelessWidget {
                       break;
                     case '/assistant':
                       page = const AssistantPage();
-                      break;
-                    case '/admin':
-                    case '/admin/listings':
-                    case '/admin/accommodations':
-                    case '/admin/destinations':
-                    case '/admin/applications':
-                      final validStatuses = [
-                        'All statuses',
-                        'Verified',
-                        'Pending Verification',
-                        'Rejected',
-                        'Suspended'
-                      ];
-                      final requestedStatus =
-                          uri.queryParameters['status'] ?? 'All statuses';
-                      page = AdminPortal(
-                        initialSection: adminSectionForRoute(uri.path),
-                        initialStatus: validStatuses.contains(requestedStatus)
-                            ? requestedStatus
-                            : 'All statuses',
-                      );
-                      break;
-                    case '/moderation':
-                      page = const AdminPage();
                       break;
                     case '/privacy':
                       page = const PolicyPage(privacy: true);

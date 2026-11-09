@@ -6,17 +6,7 @@
   "redirects": [
     {
       "source": "/admin",
-      "destination": "/#/admin",
-      "permanent": false
-    },
-    {
-      "source": "/admin/:section",
-      "destination": "/#/admin/:section",
-      "permanent": false
-    },
-    {
-      "source": "/moderation",
-      "destination": "/#/moderation",
+      "destination": "/admin/",
       "permanent": false
     }
   ],

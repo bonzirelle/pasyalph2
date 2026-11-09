@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#123e3e">
+    <title>PasyalPH Admin</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./config.js"></script>
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="PasyalPH home">
+        <span class="brand-mark">P</span>
+        <span>PasyalPH <small>ADMIN</small></span>
+      </a>
+      <div id="account-bar" class="account-bar" hidden>
+        <span id="account-email"></span>
+        <button id="sign-out" class="button button-outline" type="button">Sign out</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="auth-panel" class="auth-panel panel">
+        <p class="eyebrow">ADMINISTRATION</p>
+        <h1>Sign in to your workspace</h1>
+        <p class="muted">Use an existing PasyalPH account with the administrator role.</p>
+        <form id="login-form" class="stack">
+          <label>Email address<input name="email" type="email" autocomplete="username" required></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+          <button class="button button-primary" type="submit">Sign in</button>
+        </form>
+        <button id="forgot-link" class="text-button" type="button">Forgot password?</button>
+        <form id="recovery-form" class="stack" hidden>
+          <h2>Choose a new password</h2>
+          <label>New password<input name="password" type="password" minlength="12" maxlength="128" autocomplete="new-password" required></label>
+          <label>Confirm password<input name="confirmation" type="password" minlength="12" maxlength="128" autocomplete="new-password" required></label>
+          <button class="button button-primary" type="submit">Save password</button>
+          <button id="cancel-recovery" class="text-button" type="button">Back to sign in</button>
+        </form>
+        <p id="auth-message" class="notice" role="status" aria-live="polite"></p>
+      </section>
+
+      <section id="workspace" hidden>
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">CONTENT WORKSPACE</p>
+            <h1>Manage places and promotions</h1>
+            <p class="muted">Changes are saved to the PasyalPH Supabase database.</p>
+          </div>
+          <button id="refresh" class="button button-outline" type="button">Refresh data</button>
+        </div>
+        <p id="workspace-message" class="notice" role="status" aria-live="polite"></p>
+
+        <nav class="tabs" aria-label="Admin sections">
+          <button class="tab active" data-tab="places" type="button">Places</button>
+          <button class="tab" data-tab="promotions" type="button">Promotions</button>
+          <button class="tab" data-tab="applications" type="button">Applications</button>
+          <button class="tab" data-tab="reports" type="button">Reports</button>
+          <button class="tab" data-tab="admins" type="button">Admins</button>
+        </nav>
+
+        <section id="places-section" class="workspace-grid">
+          <div class="panel editor">
+            <div class="panel-heading">
+              <div><p class="eyebrow">PLACE DETAILS</p><h2 id="place-form-title">Add a place</h2></div>
+              <button id="place-cancel" class="text-button" type="button" hidden>Cancel edit</button>
+            </div>
+            <form id="place-form" class="stack">
+              <label>Place name<input name="name" maxlength="250" required></label>
+              <div class="two-col">
+                <label>Category<select name="category" required>
+                  <option>Tourist Spot</option><option>Food</option><option>Resort</option><option>Stay</option><option>Shop</option>
+                </select></label>
+                <label>Status<select name="status" required>
+                  <option>Verified</option><option>Pending Verification</option><option>Rejected</option><option>Suspended</option>
+                </select></label>
+              </div>
+              <label>Address<input name="address" maxlength="500" required></label>
+              <label>Description<textarea name="description" rows="4" maxlength="2000" required></textarea></label>
+              <label>Image URL or app path<input name="image" maxlength="1000" placeholder="/assets/images/taal.jpg"></label>
+              <div class="two-col">
+                <label>Latitude<input name="lat" type="number" step="any" min="-90" max="90" required></label>
+                <label>Longitude<input name="lng" type="number" step="any" min="-180" max="180" required></label>
+              </div>
+              <div class="two-col">
+                <label>Hours<input name="hours" maxlength="250"></label>
+                <label>Contact<input name="contact" maxlength="100"></label>
+              </div>
+              <label>Rates<input name="rates" maxlength="500"></label>
+              <label>Amenities <small>(comma separated)</small><input name="amenities" maxlength="1000"></label>
+              <label>Routes / transport notes <small>(comma separated)</small><input name="routes" maxlength="2000"></label>
+              <label class="check"><input name="sponsored" type="checkbox"> Sponsored placement</label>
+              <button class="button button-primary" type="submit">Save place</button>
+            </form>
+          </div>
+          <div class="panel records">
+            <div class="panel-heading"><div><p class="eyebrow">DATABASE</p><h2>Places</h2></div><span id="place-count" class="count">0</span></div>
+            <div id="places-list" class="record-list"></div>
+          </div>
+        </section>
+
+        <section id="promotions-section" class="workspace-grid" hidden>
+          <div class="panel editor">
+            <div class="panel-heading">
+              <div><p class="eyebrow">CAMPAIGN DETAILS</p><h2 id="promotion-form-title">Add a promotion</h2></div>
+              <button id="promotion-cancel" class="text-button" type="button" hidden>Cancel edit</button>
+            </div>
+            <form id="promotion-form" class="stack">
+              <label>Promotion title<input name="title" maxlength="160" required></label>
+              <label>Place<select name="place_id" required></select></label>
+              <label>Discount label<input name="discount_label" maxlength="100" placeholder="10% off"></label>
+              <label>Description<textarea name="description" rows="4" maxlength="2000"></textarea></label>
+              <div class="two-col">
+                <label>Starts<input name="starts_at" type="datetime-local" required></label>
+                <label>Ends<input name="ends_at" type="datetime-local" required></label>
+              </div>
+              <label class="check"><input name="active" type="checkbox" checked> Active</label>
+              <button class="button button-primary" type="submit">Save promotion</button>
+            </form>
+          </div>
+          <div class="panel records">
+            <div class="panel-heading"><div><p class="eyebrow">DATABASE</p><h2>Promotions</h2></div><span id="promotion-count" class="count">0</span></div>
+            <div id="promotions-list" class="record-list"></div>
+          </div>
+        </section>
+
+        <section id="applications-section" class="panel records" hidden>
+          <div class="panel-heading"><div><p class="eyebrow">BUSINESS OWNERS</p><h2>Applications awaiting review</h2></div><span id="application-count" class="count">0</span></div>
+          <div id="applications-list" class="record-list"></div>
+        </section>
+
+        <section id="reports-section" class="panel records" hidden>
+          <div class="panel-heading"><div><p class="eyebrow">TRAVELER FEEDBACK</p><h2>Place reports</h2></div><span id="report-count" class="count">0</span></div>
+          <div id="reports-list" class="record-list"></div>
+        </section>
+
+        <section id="admins-section" class="workspace-grid" hidden>
+          <div class="panel editor">
+            <div class="panel-heading"><div><p class="eyebrow">ADMIN ACCESS</p><h2>Create administrator</h2></div></div>
+            <p class="muted">Create a confirmed account with the administrator role. Make sure the email belongs to the intended person. No invitation or password email is sent. Share the temporary password securely and ask the new administrator to reset it after signing in.</p>
+            <form id="admin-form" class="stack">
+              <label>Email address<input name="email" type="email" autocomplete="off" maxlength="254" required></label>
+              <label>Temporary password<input name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required></label>
+              <label>Confirm password<input name="confirmation" type="password" autocomplete="new-password" minlength="12" maxlength="128" required></label>
+              <label class="check"><input name="confirm-understanding" type="checkbox" required> I verified this email belongs to the intended person and will share the password securely.</label>
+              <button class="button button-primary" type="submit">Create admin account</button>
+            </form>
+          </div>
+          <div class="panel editor">
+            <p class="eyebrow">IMPORTANT</p>
+            <h2>Credentials are not emailed</h2>
+            <p class="muted">The password is sent only to Supabase over HTTPS and is never displayed or stored by this site after submission. Supabase stores passwords securely; they cannot be viewed later. Give the temporary password directly to the intended account holder using a secure channel.</p>
+            <p class="muted">Creating an admin grants broad access to manage listings, promotions, business applications, and reports. Only create accounts for people you trust.</p>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

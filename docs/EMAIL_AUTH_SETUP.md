@@ -37,6 +37,8 @@ In **Authentication → URL Configuration**:
   need to be allowed. Local development uses
   `http://localhost:3000/`, `http://127.0.0.1:3000/`,
   `http://localhost:3001/`, and `http://127.0.0.1:3001/`.
+- Add the admin site's exact URL as well, for example
+  `https://pasyalph2.vercel.app/admin/` (or its separate hosting origin).
 - Add `com.pasyalph.app://login-callback/` for the Android callback.
 
 In **Authentication → Email Templates**, keep the confirmation, magic-link and

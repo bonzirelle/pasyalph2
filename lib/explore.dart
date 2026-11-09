@@ -359,7 +359,25 @@ class PlaceCard extends StatelessWidget {
                                 bottom: 8,
                                 left: 10,
                                 child: StatusPill('Sponsored',
-                                    color: Color(0xffa15b00)))
+                                    color: Color(0xffa15b00))),
+                          if (app.promotionsFor(place).isNotEmpty)
+                            Positioned(
+                                bottom: 8,
+                                right: 10,
+                                child: StatusPill(
+                                    app
+                                                .promotionsFor(place)
+                                                .first['discount_label']
+                                                ?.toString()
+                                                .trim()
+                                                .isNotEmpty ==
+                                            true
+                                        ? app
+                                            .promotionsFor(place)
+                                            .first['discount_label']
+                                            .toString()
+                                        : 'Promotion',
+                                    color: const Color(0xffa15b00)))
                         ]),
                         Padding(
                             padding: const EdgeInsets.all(13), child: details)
@@ -438,6 +456,35 @@ class _PlacePageState extends State<PlacePage> {
                 style: const TextStyle(color: muted, fontSize: 12)),
             const SizedBox(height: 16),
             Text(value(p, 'description')),
+            if (app.promotionsFor(p).isNotEmpty) ...[
+              const SizedBox(height: 16),
+              Surface(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    const Text('Current promotions',
+                        style: TextStyle(fontWeight: FontWeight.w800)),
+                    const SizedBox(height: 8),
+                    for (final promotion in app.promotionsFor(p))
+                      Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(value(promotion, 'title'),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w700)),
+                                if (value(promotion, 'discount_label')
+                                    .isNotEmpty)
+                                  Text(value(promotion, 'discount_label'),
+                                      style: const TextStyle(
+                                          color: Color(0xffa15b00),
+                                          fontWeight: FontWeight.w700)),
+                                if (value(promotion, 'description').isNotEmpty)
+                                  Text(value(promotion, 'description')),
+                              ]))
+                  ]))
+            ],
             const SizedBox(height: 18),
             Surface(
                 child: Column(

@@ -36,12 +36,37 @@ release described below.
    fields, moves privileged helpers into a private schema, enables Realtime, and
    creates the public image bucket with user-scoped writes (JPG/PNG/WebP, 5 MB).
    It does not grant admin access to any account.
-2. Review and execute `../sql/04_original_sample_catalog.sql`. This inserts the
+   If the project has no administrator yet, first create and confirm an account
+   through the normal app signup flow, then bootstrap exactly that account once
+   in the Supabase SQL Editor:
+
+   ```sql
+   update public.profiles p
+   set role = 'admin'
+   from auth.users u
+   where p.id = u.id
+     and lower(u.email) = lower('admin@example.com')
+   returning u.email, p.role;
+   ```
+
+   Replace the example address and verify the returned email before continuing.
+   After this first administrator exists, use the separate admin website to
+   create additional admin accounts.
+2. Apply `../sql/06_promotions.sql` after the feature-parity migration. It creates
+   the campaigns table, enforces administrator-only writes with RLS, and permits
+   public reads only for active campaigns attached to verified places.
+3. Review and execute `../sql/04_original_sample_catalog.sql`. This inserts the
    45 original sample listings only when their source IDs do not already exist.
    Sample reviews are display-only metadata, separate from real traveler reviews.
-3. Deploy `functions/travel-assistant` and `functions/delete-account`, retaining
-   JWT verification. The functions independently validate the caller with Auth.
-   The assistant has a 20-request daily quota. Add a server-side `GEMINI_API_KEY`
+4. Deploy `functions/travel-assistant`, `functions/delete-account`, and
+   `functions/admin-create-user`, retaining JWT verification. The admin account
+   function validates the caller's current admin profile on the server, creates
+   the user with the Supabase Auth admin API, and assigns the admin role. It
+   confirms the supplied email without sending an invitation, so verify the
+   address and share the temporary password securely. The service-role key stays
+   in Supabase Function secrets, never in the browser. The functions validate
+   their callers with Auth. The assistant has a 20-request daily quota. Add a
+   server-side `GEMINI_API_KEY`
    (and optional `GEMINI_MODEL`) to enable AI; otherwise it returns catalog results.
    Set `APP_ALLOWED_ORIGINS` as a comma-separated list of exact browser origins
    (including local preview origins and the production origin) before deployment.
@@ -49,15 +74,23 @@ release described below.
    an `Origin` header still require a valid Supabase access token. Keep the service
    role key and Gemini key in Supabase Function secrets, never Flutter defines.
    No paid provider is configured by this package.
-4. Configure Supabase Auth redirect URLs for
+5. Add the deployed admin website's **origin** (for example
+   `https://pasyalph2.vercel.app`) to the `APP_ALLOWED_ORIGINS` secret used by
+   Edge Functions. Do not include `/admin/` in an origin.
+6. Configure Supabase Auth redirect URLs for
    `http://localhost:3000/`, `http://127.0.0.1:3000/`,
-   `https://pasyalph2.vercel.app/`, and
+   `https://pasyalph2.vercel.app/`, `https://pasyalph2.vercel.app/admin/`, and
    `com.pasyalph.app://login-callback/`.
    Email signup, confirmation, reset, and optional codes use Supabase email
    templates. Custom SMTP and template configuration remain operator settings.
-5. Run security/performance advisors. Test anonymous reads, traveler isolation,
+7. Deploy `admin-web/` under `/admin/` (the Vercel build copies it there), or
+   deploy that folder to a separate static host. Add the exact admin site URL to
+   Supabase Auth's redirect allowlist. The portal uses the public publishable key
+   and requires an existing profile with role `admin`.
+8. Run security/performance advisors. Test anonymous reads, traveler isolation,
    owner approval, protected columns, uploads, Realtime and destructive account
-   deletion in a test environment before public launch.
+   deletion, promotion visibility, and admin CRUD in a test environment before
+   public launch.
 
 ## Enable Google sign-in
 
@@ -87,6 +120,8 @@ message when the button is used. No Google credentials are stored in this repo.
 The production migration attempt was rejected by automatic approval review.
 No schema, data, bucket, function, or Auth configuration changes were made.
 The Flutter client remains usable with the local, clearly labeled sample catalog.
+Custom SMTP is also an operator-side Supabase Auth setting; follow
+`../docs/EMAIL_AUTH_SETUP.md` to configure a sender and test delivery.
 
 ## Hosted security controls still required
 
